@@ -23,10 +23,10 @@ public class CommonEvents {
 		if (data.getValue(Personality.CRAWLING) && !data.getValue(Personality.SITTING) && player.getPose() != Pose.SWIMMING && !player.isPassenger()) {
 			player.setPose(Pose.SWIMMING);
 		}
-		
+
 		player.recalculateSize();
 	}
-	
+
 	@SubscribeEvent
 	public static void onEvent(EyeHeight event) {
 		if (event.getEntity() instanceof PlayerEntity) {

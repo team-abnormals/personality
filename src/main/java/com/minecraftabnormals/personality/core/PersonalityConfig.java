@@ -15,10 +15,12 @@ public class PersonalityConfig {
 
 	public static class Client {
 		public final Keybindings keybinds;
+		public final ForgeConfigSpec.BooleanValue simpleStatus;
 
 		public Client(ForgeConfigSpec.Builder builder) {
 			builder.push("client");
 			{
+				this.simpleStatus = builder.comment("If true, status icons above players will be simpler.").define("simpleStatus", false);
 				this.keybinds = new Keybindings(builder);
 			}
 			builder.pop();
