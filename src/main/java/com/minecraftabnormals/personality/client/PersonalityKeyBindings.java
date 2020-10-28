@@ -10,7 +10,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class PersonalityKeyBindings {
 
-	public static final KeyBinding SIT = new KeyBinding("key.personality.sit", GLFW.GLFW_KEY_Z, "key.categories.gameplay");
+	public static final KeyBinding SIT = new ToggleableKeyBinding("key.personality.sit", GLFW.GLFW_KEY_Z, "key.categories.gameplay", PersonalityConfig.CLIENT.keybinds.toggleSitting::get);
 	public static final KeyBinding CRAWL = new ToggleableKeyBinding("key.personality.crawl", GLFW.GLFW_KEY_C, "key.categories.gameplay", PersonalityConfig.CLIENT.keybinds.toggleCrawl::get);
 
 	public static final IteratableOption CRAWL_OPTION = new IteratableOption(
