@@ -12,7 +12,7 @@ public class ServerNetworkHandler {
 		ServerPlayerEntity player = context.getSender();
 		IDataManager data = (IDataManager) player;
 
-		if(data == null)
+		if (data == null)
 			return;
 
 		data.setValue(Personality.PRONED, message.isProning());

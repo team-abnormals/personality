@@ -28,46 +28,41 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod(Personality.MODID)
-public class Personality
-{
-    public static final String MODID = "personality";
-    public static final TrackedData<Boolean> PRONED = TrackedData.Builder.create(DataProcessors.BOOLEAN, () -> false).build();
-    
-	public static final KeyBinding SIT 			= new KeyBinding("key.personality.sit", 90, "key.categories.gameplay");
-	public static final KeyBinding CRAWL 		= new KeyBinding("key.personality.crawl", 67, "key.categories.gameplay");
-	
+public class Personality {
+	public static final String MODID = "personality";
+	public static final TrackedData<Boolean> PRONED = TrackedData.Builder.create(DataProcessors.BOOLEAN, () -> false).build();
+
+	public static final KeyBinding SIT = new KeyBinding("key.personality.sit", 90, "key.categories.gameplay");
+	public static final KeyBinding CRAWL = new KeyBinding("key.personality.crawl", 67, "key.categories.gameplay");
+
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
-    public static final RegistryObject<EntityType<SeatEntity>> SEAT = ENTITIES.register("seat", () -> EntityType.Builder.<SeatEntity>create(SeatEntity::new, EntityClassification.MISC).setTrackingRange(256).setUpdateInterval(20).size(0.0001F, 0.0001F).build(MODID + ":seat"));
+	public static final RegistryObject<EntityType<SeatEntity>> SEAT = ENTITIES.register("seat", () -> EntityType.Builder.<SeatEntity>create(SeatEntity::new, EntityClassification.MISC).setTrackingRange(256).setUpdateInterval(20).size(0.0001F, 0.0001F).build(MODID + ":seat"));
 
-    public Personality()
-    {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ENTITIES.register(bus);
-        
-        bus.addListener(this::commonSetup);
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-        	bus.addListener(this::clientSetup);
-        });
+	public Personality() {
+		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		ENTITIES.register(bus);
 
-        MinecraftForge.EVENT_BUS.register(this);
-    }
+		bus.addListener(this::commonSetup);
+		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+			bus.addListener(this::clientSetup);
+		});
 
-    private void commonSetup(FMLCommonSetupEvent event)
-    {
-    }
+		MinecraftForge.EVENT_BUS.register(this);
+	}
 
-    @OnlyIn(Dist.CLIENT)
-	private void clientSetup(FMLClientSetupEvent event)
-    {
-    	ClientRegistry.registerKeyBinding(SIT);
-    	ClientRegistry.registerKeyBinding(CRAWL);
-    	
+	private void commonSetup(FMLCommonSetupEvent event) {
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private void clientSetup(FMLClientSetupEvent event) {
+		ClientRegistry.registerKeyBinding(SIT);
+		ClientRegistry.registerKeyBinding(CRAWL);
+
 		RenderingRegistry.registerEntityRenderingHandler(SEAT.get(), SeatRenderer::new);
 	}
 
 	@SubscribeEvent
-	public void onPlayerTick(RightClickBlock event)
-	{
+	public void onPlayerTick(RightClickBlock event) {
 		PlayerEntity player = event.getPlayer();
 		World world = event.getWorld();
 		if (!world.isRemote() && player.isOnGround()) {

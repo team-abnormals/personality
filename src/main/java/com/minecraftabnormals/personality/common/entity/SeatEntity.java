@@ -12,7 +12,7 @@ public class SeatEntity extends Entity {
 		super(type, world);
 		this.noClip = true;
 	}
-	
+
 	@Override
 	public void tick() {
 		super.tick();

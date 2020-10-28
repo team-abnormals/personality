@@ -14,7 +14,7 @@ public class CommonEvents {
 	public static void onEvent(TickEvent.PlayerTickEvent event) {
 		PlayerEntity player = event.player;
 
-		if(player == null || player.world.isRemote)
+		if (player == null || player.world.isRemote)
 			return;
 
 		// TODO: add proning

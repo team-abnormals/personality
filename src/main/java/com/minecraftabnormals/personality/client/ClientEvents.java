@@ -12,6 +12,6 @@ public class ClientEvents {
 
 	@SubscribeEvent
 	public static void onEvent(InputEvent.KeyInputEvent event) {
-		//TODO: Check for proning key input
+		// TODO: Check for proning key input
 	}
 }
