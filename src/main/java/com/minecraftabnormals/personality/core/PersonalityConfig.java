@@ -14,24 +14,26 @@ public class PersonalityConfig {
 	}
 
 	public static class Client {
-		public final Keybinds keybinds;
+		public final Keybindings keybinds;
 
 		public Client(ForgeConfigSpec.Builder builder) {
 			builder.push("client");
 			{
-				this.keybinds = new Keybinds(builder);
+				this.keybinds = new Keybindings(builder);
 			}
 			builder.pop();
 		}
 	}
 
-	public static class Keybinds {
+	public static class Keybindings {
 		public final ForgeConfigSpec.BooleanValue toggleCrawl;
+		public final ForgeConfigSpec.BooleanValue toggleSitting;
 
-		public Keybinds(ForgeConfigSpec.Builder builder) {
-			builder.comment("Options for Personality keybinds.").push("keybinds");
+		public Keybindings(ForgeConfigSpec.Builder builder) {
+			builder.comment("Options for Personality keybindings.").push("keybindings");
 			{
-				this.toggleCrawl = builder.comment("If true, crawl will be toggled when the keybind is pressed instead of holding the key.").define("toggleCrawl", false);
+				this.toggleCrawl = builder.comment("If true, crawl will be toggled when the keybinding is pressed instead of holding the key.").define("toggleCrawl", false);
+				this.toggleSitting = builder.comment("If true, sitting will be toggled when the keybinding is pressed instead of holding the key.").define("toggleSitting", false);
 			}
 			builder.pop();
 		}

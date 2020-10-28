@@ -19,6 +19,12 @@ public class PersonalityKeyBindings {
 			(settings, option) -> option.func_238238_a_().append(new TranslationTextComponent(PersonalityConfig.CLIENT.keybinds.toggleCrawl.get() ? "options.key.toggle" : "options.key.hold"))
 	);
 
+	public static final IteratableOption SIT_OPTION = new IteratableOption(
+			PersonalityKeyBindings.SIT.getKeyDescription(),
+			(settings, value) -> PersonalityConfig.CLIENT.keybinds.toggleSitting.set(!PersonalityConfig.CLIENT.keybinds.toggleSitting.get()),
+			(settings, option) -> option.func_238238_a_().append(new TranslationTextComponent(PersonalityConfig.CLIENT.keybinds.toggleSitting.get() ? "options.key.toggle" : "options.key.hold"))
+	);
+
 	public static void registerKeyBinds() {
 		ClientRegistry.registerKeyBinding(SIT);
 		ClientRegistry.registerKeyBinding(CRAWL);

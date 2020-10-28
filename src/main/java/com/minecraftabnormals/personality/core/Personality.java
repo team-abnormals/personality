@@ -4,6 +4,7 @@ import com.minecraftabnormals.personality.client.PersonalityKeyBindings;
 import com.minecraftabnormals.personality.client.renderer.SeatRenderer;
 import com.minecraftabnormals.personality.common.entity.SeatEntity;
 import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
+import com.minecraftabnormals.personality.common.network.MessageC2SSit;
 import com.teamabnormals.abnormals_core.common.world.storage.tracking.DataProcessors;
 import com.teamabnormals.abnormals_core.common.world.storage.tracking.TrackedData;
 import com.teamabnormals.abnormals_core.common.world.storage.tracking.TrackedDataManager;
@@ -33,6 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class Personality {
 	public static final String MODID = "personality";
 	public static final TrackedData<Boolean> CRAWLING = TrackedData.Builder.create(DataProcessors.BOOLEAN, () -> false).build();
+	public static final TrackedData<Boolean> SITTING = TrackedData.Builder.create(DataProcessors.BOOLEAN, () -> false).build();
 
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
 	public static final RegistryObject<EntityType<SeatEntity>> SEAT = ENTITIES.register("seat", () -> EntityType.Builder.create(SeatEntity::new, EntityClassification.MISC).setTrackingRange(256).setUpdateInterval(20).size(0.0001F, 0.0001F).build(MODID + ":seat"));
@@ -60,6 +62,7 @@ public class Personality {
 
 	private void commonSetup(FMLCommonSetupEvent event) {
 		TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MODID, "crawling"), CRAWLING);
+		TrackedDataManager.INSTANCE.registerData(new ResourceLocation(MODID, "sitting"), SITTING);
 	}
 
 	private void clientSetup(FMLClientSetupEvent event) {
@@ -70,7 +73,8 @@ public class Personality {
 	private void setupMessages() {
 		int id = -1;
 
-		CHANNEL.registerMessage(id, MessageC2SCrawl.class, MessageC2SCrawl::serialize, MessageC2SCrawl::deserialize, MessageC2SCrawl::handle);
+		CHANNEL.registerMessage(id++, MessageC2SCrawl.class, MessageC2SCrawl::serialize, MessageC2SCrawl::deserialize, MessageC2SCrawl::handle);
+		CHANNEL.registerMessage(id, MessageC2SSit.class, MessageC2SSit::serialize, MessageC2SSit::deserialize, MessageC2SSit::handle);
 	}
 
 	@SubscribeEvent

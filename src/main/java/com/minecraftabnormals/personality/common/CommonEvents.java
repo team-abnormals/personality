@@ -19,7 +19,7 @@ public class CommonEvents {
 		if (data == null || event.phase != TickEvent.Phase.END)
 			return;
 
-		if (data.getValue(Personality.CRAWLING) && player.getPose() != Pose.SWIMMING && !player.isPassenger()) {
+		if (data.getValue(Personality.CRAWLING) && !data.getValue(Personality.SITTING) && player.getPose() != Pose.SWIMMING && !player.isPassenger()) {
 			player.setPose(Pose.SWIMMING);
 		}
 	}
