@@ -1,22 +1,25 @@
 package com.minecraftabnormals.personality.client;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
 import com.minecraftabnormals.personality.common.network.MessageC2SSit;
 import com.minecraftabnormals.personality.core.Personality;
 import com.teamabnormals.abnormals_core.common.world.storage.tracking.IDataManager;
+
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AccessibilityScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 @Mod.EventBusSubscriber(modid = Personality.MODID, value = Dist.CLIENT)
 public class ClientEvents {
@@ -73,5 +76,14 @@ public class ClientEvents {
 		for (AbstractOption option : options)
 			src = ArrayUtils.add(src, option);
 		return src;
+	}
+	
+	@SubscribeEvent
+	public static void onEvent(RenderPlayerEvent.Pre event) {
+		PlayerEntity player = event.getPlayer();
+		IDataManager data = (IDataManager) player;
+
+		if (data.getValue(Personality.SITTING) && !data.getValue(Personality.CRAWLING) && !player.isPassenger())
+			event.getMatrixStack().translate(0.0F, -0.55F, 0.0F);
 	}
 }
