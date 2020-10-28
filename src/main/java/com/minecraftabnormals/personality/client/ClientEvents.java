@@ -6,13 +6,13 @@ import com.teamabnormals.abnormals_core.common.world.storage.tracking.IDataManag
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AccessibilityScreen;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -21,25 +21,7 @@ import java.lang.reflect.Modifier;
 public class ClientEvents {
 
 	static {
-		try {
-			Field optionsField = ObfuscationReflectionHelper.findField(AccessibilityScreen.class, "field_212986_a");
-			Field modifiedField = Field.class.getDeclaredField("modifiers");
-			modifiedField.setAccessible(true);
-			modifiedField.setInt(optionsField, optionsField.getModifiers() & ~Modifier.FINAL);
-
-			AbstractOption[] options = (AbstractOption[]) optionsField.get(null);
-
-			if (options == null)
-				throw new NullPointerException("Accessibility options were null.");
-
-			AbstractOption[] newOptions = new AbstractOption[options.length + 1];
-			System.arraycopy(options, 0, newOptions, 0, options.length);
-
-			newOptions[options.length] = PersonalityKeyBindings.CRAWL_OPTION;
-			optionsField.set(null, newOptions);
-		} catch (Exception e) {
-			throw new RuntimeException("Failed to add accessibility option.", e);
-		}
+		addAccessibilityOptions();
 	}
 
 	@SubscribeEvent
@@ -58,5 +40,29 @@ public class ClientEvents {
 		} else if (crawling) {
 			Personality.CHANNEL.sendToServer(new MessageC2SCrawl(false));
 		}
+	}
+
+	private static void addAccessibilityOptions() {
+		try {
+			Field optionsField = ObfuscationReflectionHelper.findField(AccessibilityScreen.class, "field_212986_a");
+			Field modifiedField = Field.class.getDeclaredField("modifiers");
+			modifiedField.setAccessible(true);
+			modifiedField.setInt(optionsField, optionsField.getModifiers() & ~Modifier.FINAL);
+
+			AbstractOption[] options = (AbstractOption[]) optionsField.get(null);
+
+			if (options == null)
+				throw new NullPointerException("Accessibility options were null.");
+
+			optionsField.set(null, addButtons(options, PersonalityKeyBindings.CRAWL_OPTION, PersonalityKeyBindings.SIT_OPTION));
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to add accessibility option.", e);
+		}
+	}
+
+	private static AbstractOption[] addButtons(AbstractOption[] src, AbstractOption... options) {
+		for (AbstractOption option : options)
+			src = ArrayUtils.add(src, option);
+		return src;
 	}
 }

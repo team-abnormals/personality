@@ -5,7 +5,6 @@ import net.minecraft.client.settings.IteratableOption;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.settings.ToggleableKeyBinding;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
