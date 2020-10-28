@@ -1,13 +1,13 @@
 package com.minecraftabnormals.personality.client;
 
 import com.minecraftabnormals.personality.core.Personality;
+
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Personality.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Personality.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
 	@SubscribeEvent

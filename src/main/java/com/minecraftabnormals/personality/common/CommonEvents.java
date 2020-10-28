@@ -1,13 +1,13 @@
 package com.minecraftabnormals.personality.common;
 
 import com.minecraftabnormals.personality.core.Personality;
+
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Personality.MOD_ID)
+@Mod.EventBusSubscriber(modid = Personality.MODID)
 public class CommonEvents {
 
 	@SubscribeEvent

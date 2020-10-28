@@ -1,13 +1,12 @@
 package com.minecraftabnormals.personality.common.network;
 
+import java.util.function.Supplier;
+
 import com.minecraftabnormals.personality.common.network.handler.ServerNetworkHandler;
+
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
-
-import java.util.function.Supplier;
 
 public final class MessageC2SProne {
 	private final boolean prone;
