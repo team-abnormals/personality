@@ -1,7 +1,6 @@
 package com.minecraftabnormals.personality.client.renderer;
 
 import com.minecraftabnormals.personality.common.entity.SeatEntity;
-
 import net.minecraft.client.renderer.culling.ClippingHelper;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
