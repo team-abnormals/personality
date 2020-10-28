@@ -34,6 +34,7 @@ minecraft {
             workingDirectory project.file('run/client')
             property 'forge.logging.console.level', 'debug'
             arg "-mixin.config=personality.mixins.json"
+            jvmArg "-Dmixin.env.disableRefMap=true"
 
             mods {
                 personality {
@@ -46,6 +47,7 @@ minecraft {
             workingDirectory project.file('run/server')
             property 'forge.logging.console.level', 'debug'
             arg "-mixin.config=personality.mixins.json"
+            jvmArg "-Dmixin.env.disableRefMap=true"
 
             mods {
                 personality {
