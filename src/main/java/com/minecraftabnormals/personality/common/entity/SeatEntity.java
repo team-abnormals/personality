@@ -12,11 +12,11 @@ public class SeatEntity extends Entity {
 		super(type, world);
 		this.noClip = true;
 	}
-
+	
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.getPassengers().isEmpty())
+		if (!world.isRemote() && this.getPassengers().isEmpty())
 			this.remove();
 	}
 

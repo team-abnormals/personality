@@ -1,5 +1,4 @@
 {
-  "key.personality.sit": "Sit",
-  "key.personality.crawl": "Crawl",
-  "key.personality.toggle_crawl": "Toggle Crawl"
+	"key.personality.sit": "Sit",
+	"key.personality.crawl": "Crawl"
 }
