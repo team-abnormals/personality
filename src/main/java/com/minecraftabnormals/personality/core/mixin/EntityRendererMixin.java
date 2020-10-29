@@ -12,6 +12,7 @@ public abstract class EntityRendererMixin<T extends Entity> implements EntityRen
 	@Shadow
 	protected abstract boolean canRenderName(T entity);
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean getCanRenderName(Entity entity) {
 		return this.canRenderName((T) entity);

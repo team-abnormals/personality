@@ -4,14 +4,16 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "refmap": "personality.refmap.json",
+  "mixins": [
+    "PlayerEntityMixin",
+    "EntityMixin"
+  ],
   "client": [
     "EntityRendererMixin",
-    "PlayerModelMixin"
+    "PlayerModelMixin",
+    "AgeableModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "mixins": [
-    "PlayerEntityMixin"
-  ]
+  }
 }

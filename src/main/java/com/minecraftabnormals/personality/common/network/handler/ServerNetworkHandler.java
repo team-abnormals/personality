@@ -29,7 +29,7 @@ public class ServerNetworkHandler {
 		if (data == null)
 			return;
 
-		if (player.isPassenger())
+		if (player.isPassenger() || !player.isOnGround())
 			return;
 
 		data.setValue(Personality.SITTING, message.isSitting());
