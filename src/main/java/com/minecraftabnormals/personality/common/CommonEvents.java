@@ -44,7 +44,7 @@ public class CommonEvents {
 			IDataManager data = (IDataManager) player;
 
 			if (data.getValue(Personality.SITTING) && !data.getValue(Personality.CRAWLING) && !player.isPassenger()) {
-				event.setNewHeight(event.getOldHeight() - 0.55F);
+				event.setNewHeight(event.getOldHeight() - 0.5F);
 			}
 		}
 	}
@@ -56,7 +56,7 @@ public class CommonEvents {
 			IDataManager data = (IDataManager) player;
 
 			if (data.getValue(Personality.SITTING) && !data.getValue(Personality.CRAWLING) && !player.isPassenger()) {
-				event.setSize(new EntitySize(event.getSize().width, event.getSize().height - 0.55F, event.getSize().fixed));
+				event.setSize(new EntitySize(event.getSize().width, event.getSize().height - 0.5F, event.getSize().fixed));
 			}
 		}
 	}
