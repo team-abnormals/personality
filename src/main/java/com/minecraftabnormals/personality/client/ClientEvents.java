@@ -57,7 +57,7 @@ public class ClientEvents {
 		} else if (crawling) {
 			Personality.CHANNEL.sendToServer(new MessageC2SCrawl(false));
 		}
-		if (PersonalityKeyBindings.SIT.isKeyDown() && CommonEvents.getTotalMotion(player.getPositionVec()) >= 0.185F) {
+		if (PersonalityKeyBindings.SIT.isKeyDown() && Math.abs(motion.getX()) <= 0.008 && Math.abs(motion.getZ()) <= 0.008) {
 			if (!sitting) {
 				Personality.CHANNEL.sendToServer(new MessageC2SSit(true));
 			}
