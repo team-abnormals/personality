@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererMixin<T extends Entity> implements EntityRendererAccessor {
-
 	@Shadow
 	protected abstract boolean canRenderName(T entity);
 

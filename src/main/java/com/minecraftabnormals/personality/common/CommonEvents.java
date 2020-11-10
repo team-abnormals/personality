@@ -3,7 +3,6 @@ package com.minecraftabnormals.personality.common;
 import com.minecraftabnormals.personality.core.Personality;
 import com.minecraftabnormals.personality.core.event.PlayerSizeEvent;
 import com.teamabnormals.abnormals_core.common.world.storage.tracking.IDataManager;
-
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,7 +29,7 @@ public class CommonEvents {
 
 		player.recalculateSize();
 	}
-	
+
 	public static float getTotalMotion(Vector3d motion) {
 		double x = motion.getX();
 		double y = motion.getY();
@@ -49,7 +48,7 @@ public class CommonEvents {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onEvent(PlayerSizeEvent event) {
 		if (event.getEntity() instanceof PlayerEntity) {

@@ -1,5 +1,6 @@
 package com.minecraftabnormals.personality.client;
 
+import com.minecraftabnormals.personality.common.CommonEvents;
 import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
 import com.minecraftabnormals.personality.common.network.MessageC2SSit;
 import com.minecraftabnormals.personality.core.Personality;
@@ -56,7 +57,7 @@ public class ClientEvents {
 		} else if (crawling) {
 			Personality.CHANNEL.sendToServer(new MessageC2SCrawl(false));
 		}
-		if (PersonalityKeyBindings.SIT.isKeyDown() && Math.abs(motion.getX()) <= 0.008 && Math.abs(motion.getZ()) <= 0.008) {
+		if (PersonalityKeyBindings.SIT.isKeyDown() && CommonEvents.getTotalMotion(player.getPositionVec()) >= 0.185F) {
 			if (!sitting) {
 				Personality.CHANNEL.sendToServer(new MessageC2SSit(true));
 			}

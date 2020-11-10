@@ -6,30 +6,30 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class PlayerSizeEvent extends PlayerEvent {
-    private final Pose pose;
-    private final EntitySize prevSize;
-    private EntitySize size;
+	private final Pose pose;
+	private final EntitySize prevSize;
+	private EntitySize size;
 
-    public PlayerSizeEvent(PlayerEntity entity, Pose pose, EntitySize size) {
-        super(entity);
-        this.pose = pose;
-        this.prevSize = size;
-        this.size = size;
-    }
+	public PlayerSizeEvent(PlayerEntity entity, Pose pose, EntitySize size) {
+		super(entity);
+		this.pose = pose;
+		this.prevSize = size;
+		this.size = size;
+	}
 
-    public Pose getPose() {
-        return pose;
-    }
+	public Pose getPose() {
+		return pose;
+	}
 
-    public EntitySize getPreviousSize() {
-        return prevSize;
-    }
+	public EntitySize getPreviousSize() {
+		return prevSize;
+	}
 
-    public EntitySize getSize() {
-        return size;
-    }
+	public EntitySize getSize() {
+		return size;
+	}
 
-    public void setSize(EntitySize size) {
-        this.size = size;
-    }
+	public void setSize(EntitySize size) {
+		this.size = size;
+	}
 }

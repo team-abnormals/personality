@@ -7,9 +7,9 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class PersonalityHooks {
 
-    public static EntitySize getPlayerSize(EntitySize size, PlayerEntity entity, Pose pose) {
-        PlayerSizeEvent sizeEvent = new PlayerSizeEvent(entity, pose, size);
-        MinecraftForge.EVENT_BUS.post(sizeEvent);
-        return sizeEvent.getSize();
-    }
+	public static EntitySize getPlayerSize(EntitySize size, PlayerEntity entity, Pose pose) {
+		PlayerSizeEvent sizeEvent = new PlayerSizeEvent(entity, pose, size);
+		MinecraftForge.EVENT_BUS.post(sizeEvent);
+		return sizeEvent.getSize();
+	}
 }
