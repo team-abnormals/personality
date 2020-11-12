@@ -33,5 +33,6 @@ public class ServerNetworkHandler {
 			return;
 
 		data.setValue(Personality.SITTING, message.isSitting());
+		player.recalculateSize();
 	}
 }

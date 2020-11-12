@@ -26,8 +26,6 @@ public class CommonEvents {
 		if (data.getValue(Personality.CRAWLING) && !data.getValue(Personality.SITTING) && player.getPose() != Pose.SWIMMING && !player.isPassenger()) {
 			player.setPose(Pose.SWIMMING);
 		}
-
-		player.recalculateSize();
 	}
 
 	public static float getTotalMotion(Vector3d motion) {
