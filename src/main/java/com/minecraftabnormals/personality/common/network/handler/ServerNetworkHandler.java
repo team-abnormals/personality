@@ -16,7 +16,7 @@ public class ServerNetworkHandler {
 		if (data == null)
 			return;
 
-		if (player.isPassenger() && data.getValue(Personality.SITTING))
+		if (player.isPassenger() || data.getValue(Personality.SITTING))
 			return;
 
 		data.setValue(Personality.CRAWLING, message.isCrawling());
@@ -29,7 +29,7 @@ public class ServerNetworkHandler {
 		if (data == null)
 			return;
 
-		if (player.isPassenger() || !player.isOnGround() && data.getValue(Personality.CRAWLING))
+		if (player.isPassenger() || !player.isOnGround() || data.getValue(Personality.CRAWLING))
 			return;
 
 		data.setValue(Personality.SITTING, message.isSitting());
