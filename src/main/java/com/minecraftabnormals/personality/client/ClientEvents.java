@@ -1,6 +1,5 @@
 package com.minecraftabnormals.personality.client;
 
-import com.minecraftabnormals.personality.common.CommonEvents;
 import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
 import com.minecraftabnormals.personality.common.network.MessageC2SSit;
 import com.minecraftabnormals.personality.core.Personality;
@@ -16,6 +15,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
@@ -52,16 +52,24 @@ public class ClientEvents {
 		boolean sitting = data.getValue(Personality.SITTING);
 
 		if (PersonalityKeyBindings.CRAWL.isKeyDown() && !sitting) {
-			if (!crawling)
+			if (!crawling) {
+				player.setPose(Pose.SWIMMING);
 				Personality.CHANNEL.sendToServer(new MessageC2SCrawl(true));
+			}
 		} else if (crawling) {
 			Personality.CHANNEL.sendToServer(new MessageC2SCrawl(false));
 		}
+
+
 		if (PersonalityKeyBindings.SIT.isKeyDown() && !crawling && Math.abs(motion.getX()) <= 0.008 && Math.abs(motion.getZ()) <= 0.008) {
 			if (!sitting) {
+				data.setValue(Personality.SITTING, true);
+				player.recalculateSize();
 				Personality.CHANNEL.sendToServer(new MessageC2SSit(true));
 			}
 		} else if (sitting) {
+			data.setValue(Personality.SITTING, false);
+			player.recalculateSize();
 			Personality.CHANNEL.sendToServer(new MessageC2SSit(false));
 		}
 	}
