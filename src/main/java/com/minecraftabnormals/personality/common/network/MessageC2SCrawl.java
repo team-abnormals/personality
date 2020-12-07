@@ -1,15 +1,10 @@
 package com.minecraftabnormals.personality.common.network;
 
 import com.minecraftabnormals.personality.common.network.handler.ServerNetHandler;
-import com.minecraftabnormals.personality.core.Personality;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
 
-import java.util.UUID;
 import java.util.function.Supplier;
 
 public final class MessageC2SCrawl {

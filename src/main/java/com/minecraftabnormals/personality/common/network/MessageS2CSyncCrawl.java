@@ -1,12 +1,7 @@
 package com.minecraftabnormals.personality.common.network;
 
-import com.minecraftabnormals.personality.client.ClientEvents;
 import com.minecraftabnormals.personality.common.network.handler.ClientNetHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
 

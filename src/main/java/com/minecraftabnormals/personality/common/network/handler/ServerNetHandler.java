@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class ServerNetHandler {
-	
+
 	public static void handleCrawl(MessageC2SCrawl message, NetworkEvent.Context context) {
 		ServerPlayerEntity player = context.getSender();
 		if (player == null)
@@ -31,7 +31,7 @@ public class ServerNetHandler {
 		player.setForcedPose(Pose.SWIMMING);
 		Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncCrawl(uuid, true));
 	}
-	
+
 	public static void handleSit(MessageC2SSit message, NetworkEvent.Context context) {
 		ServerPlayerEntity player = context.getSender();
 		if (player == null)

@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class ClientNetHandler {
-	
+
 	public static void handleCrawlSync(MessageS2CSyncCrawl message, NetworkEvent.Context context) {
 		Minecraft minecraft = Minecraft.getInstance();
 		World world = minecraft.world;
@@ -27,7 +27,7 @@ public class ClientNetHandler {
 		if (player == minecraft.player)
 			ClientEvents.crawling = message.isCrawling();
 	}
-	
+
 	public static void handleSitSync(MessageS2CSyncSit message, NetworkEvent.Context context) {
 		Minecraft minecraft = Minecraft.getInstance();
 		World world = minecraft.world;
