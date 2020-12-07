@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "com.minecraftabnormals.personality.core.mixin",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "personality.refmap.json",
+  "mixins": [
+    "EntityMixin",
+    "PlayerEntityMixin"
+  ],
+  "client": [
+    "client.AgeableModelMixin",
+    "client.BipedModelMixin",
+    "client.ClientPlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,10 +1,12 @@
 package com.minecraftabnormals.personality.common.network;
 
+import com.minecraftabnormals.personality.common.CommonEvents;
 import com.minecraftabnormals.personality.core.Personality;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Set;
 import java.util.UUID;
@@ -26,16 +28,22 @@ public final class MessageC2SSit {
 		if (context.getDirection().getReceptionSide() == LogicalSide.SERVER) {
 			context.enqueueWork(() -> {
 				ServerPlayerEntity player = context.getSender();
-				if(player == null)
+				if (player == null)
 					return;
 
 				UUID uuid = player.getUniqueID();
-				if(Personality.CRAWLING_PLAYERS.contains(uuid) || !player.isOnGround() || player.isPassenger() || player.openContainer != null)
-					return;
-
 				Set<UUID> players = Personality.SITTING_PLAYERS;
-				if(message.sit) players.add(player.getUniqueID());
-				else players.remove(player.getUniqueID());
+
+				if (!message.sit || !CommonEvents.testSit(player)) {
+					players.remove(player.getUniqueID());
+					player.recalculateSize();
+					Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new MessageS2CSyncSit(uuid, false));
+					return;
+				}
+
+				players.add(player.getUniqueID());
+				player.recalculateSize();
+				Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new MessageS2CSyncSit(uuid, true));
 			});
 			context.setPacketHandled(true);
 		}

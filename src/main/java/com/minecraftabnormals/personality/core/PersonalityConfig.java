@@ -15,12 +15,10 @@ public class PersonalityConfig {
 
 	public static class Client {
 		public final Keybindings keybinds;
-//		public final ForgeConfigSpec.BooleanValue simpleStatus;
 
 		public Client(ForgeConfigSpec.Builder builder) {
 			builder.push("client");
 			{
-//				this.simpleStatus = builder.comment("If true, status icons above players will be simpler.").define("simpleStatus", false);
 				this.keybinds = new Keybindings(builder);
 			}
 			builder.pop();
@@ -34,8 +32,8 @@ public class PersonalityConfig {
 		public Keybindings(ForgeConfigSpec.Builder builder) {
 			builder.comment("Options for Personality keybindings.").push("keybindings");
 			{
-				this.toggleCrawl = builder.comment("If true, crawling will be toggleable instead of held.").define("toggleCrawl", false);
-				this.toggleSitting = builder.comment("If true, sitting will be toggleable instead of held.").define("toggleSitting", false);
+				this.toggleCrawl = builder.comment("If true, crawling will be toggled on or off instead of the keybinding being held down. (Default: false)").define("toggleCrawl", false);
+				this.toggleSitting = builder.comment("If true, sitting will be toggled on or off instead of the keybinding being held down. (Default: true)").define("toggleSitting", true);
 			}
 			builder.pop();
 		}
