@@ -1,33 +1,36 @@
 modLoader = "javafml"
 loaderVersion = "[32,)"
-issueTrackerURL="https://github.com/minecraftabnormals/Personality/issues"
-license = "https://github.com/minecraftabnormals/Personality/blob/main/LICENSE.txt"
+issueTrackerURL = "https://github.com/team-abnormals/personality/issues"
+license = "https://github.com/team-abnormals/personality/blob/main/LICENSE"
 
 [[mods]]
-	modId = "personality"
-	version = "${file.jarVersion}"
-	displayName = "Personality"
-	authors = "Jackson and Bagel"
-	credits = "Tallestred (Eating Animation)"
-	description = '''Adds new cosmetic features to players.'''
+    modId = "personality"
+    version = "${file.jarVersion}"
+    logoFile = "logo.png"
+    authors = "Team Abnormals"
+    credits = "Jackson"
+    displayName = "Personality"
+    description = '''
+    Adds new features to players.
+    '''
 
 [[dependencies.personality]]
-	modId = "forge"
-	mandatory = true
-	versionRange = "[32,)"
-	ordering = "NONE"
-	side = "BOTH"
+    modId = "minecraft"
+    mandatory = true
+    versionRange = "[1.16.3,1.17)"
+    ordering = "NONE"
+    side = "BOTH"
 
 [[dependencies.personality]]
-	modId = "minecraft"
-	mandatory = true
-	versionRange = "[1.16.1]"
-	ordering = "NONE"
-	side = "BOTH"
+    modId = "forge"
+    mandatory = true
+    versionRange = "[34.1.42,)"
+    ordering = "NONE"
+    side = "BOTH"
 
-[[dependencies.environmental]]
-	modId="abnormals_core"
-	mandatory=true
-	versionRange="[2.0.7,)"
-	ordering="AFTER"
-	side="BOTH"
+[[dependencies.personality]]
+    modId = "abnormals_core"
+    mandatory = true
+    versionRange = "[3.0.1,)"
+    ordering = "AFTER"
+    side = "BOTH"
