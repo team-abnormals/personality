@@ -1,6 +1,6 @@
 package com.minecraftabnormals.personality.core.mixin.client;
 
-import com.minecraftabnormals.personality.client.PersonalityClient;
+import com.minecraftabnormals.personality.core.Personality;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -19,7 +19,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
 	@Inject(method = "isCrouching", at = @At("HEAD"), cancellable = true)
 	public void stopCrouch(CallbackInfoReturnable<Boolean> cir) {
-		if (PersonalityClient.SITTING_PLAYERS.contains(this.getUniqueID()) || this.getForcedPose() == Pose.SWIMMING)
+		if (Personality.SITTING_PLAYERS.contains(this.getUniqueID()) || this.getForcedPose() == Pose.SWIMMING)
 			cir.setReturnValue(false);
 	}
 }

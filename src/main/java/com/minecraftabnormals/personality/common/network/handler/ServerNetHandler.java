@@ -24,7 +24,7 @@ public class ServerNetHandler {
 		UUID uuid = player.getUniqueID();
 		if (!message.isCrawling() || Personality.SITTING_PLAYERS.contains(uuid) || player.isPassenger()) {
 			player.setForcedPose(null);
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new MessageS2CSyncCrawl(uuid, false));
+			Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncCrawl(uuid, false));
 			return;
 		}
 
@@ -43,12 +43,12 @@ public class ServerNetHandler {
 		if (!message.isSitting() || !CommonEvents.testSit(player)) {
 			players.remove(player.getUniqueID());
 			player.recalculateSize();
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new MessageS2CSyncSit(uuid, false));
+			Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncSit(uuid, false));
 			return;
 		}
 
 		players.add(player.getUniqueID());
 		player.recalculateSize();
-		Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new MessageS2CSyncSit(uuid, true));
+		Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncSit(uuid, true));
 	}
 }

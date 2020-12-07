@@ -1,6 +1,5 @@
 package com.minecraftabnormals.personality.common;
 
-import com.minecraftabnormals.personality.client.PersonalityClient;
 import com.minecraftabnormals.personality.common.network.MessageS2CSyncCrawl;
 import com.minecraftabnormals.personality.core.Personality;
 import net.minecraft.entity.Entity;
@@ -63,7 +62,7 @@ public class CommonEvents {
 
 		PlayerEntity player = (PlayerEntity) entity;
 		UUID uuid = player.getUniqueID();
-		if ((Personality.SITTING_PLAYERS.contains(uuid) || PersonalityClient.SITTING_PLAYERS.contains(uuid)) && testSit(player)) {
+		if (Personality.SITTING_PLAYERS.contains(uuid) && testSit(player)) {
 			EntitySize size = PlayerEntity.STANDING_SIZE;
 
 			event.setNewSize(new EntitySize(size.width, size.height - 0.5F, size.fixed));
@@ -76,6 +75,6 @@ public class CommonEvents {
 	}
 
 	public static boolean testCrawl(PlayerEntity player) {
-		return !(Personality.SITTING_PLAYERS.contains(player.getUniqueID()) || PersonalityClient.SITTING_PLAYERS.contains(player.getUniqueID())) && !player.isPassenger();
+		return !Personality.SITTING_PLAYERS.contains(player.getUniqueID()) && !player.isPassenger();
 	}
 }

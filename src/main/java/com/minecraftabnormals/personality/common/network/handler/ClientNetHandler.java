@@ -1,9 +1,9 @@
 package com.minecraftabnormals.personality.common.network.handler;
 
 import com.minecraftabnormals.personality.client.ClientEvents;
-import com.minecraftabnormals.personality.client.PersonalityClient;
 import com.minecraftabnormals.personality.common.network.MessageS2CSyncCrawl;
 import com.minecraftabnormals.personality.common.network.MessageS2CSyncSit;
+import com.minecraftabnormals.personality.core.Personality;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,8 +38,8 @@ public class ClientNetHandler {
 		if (player == null)
 			return;
 
-		if (message.isSitting()) PersonalityClient.SITTING_PLAYERS.add(message.getUUID());
-		else PersonalityClient.SITTING_PLAYERS.remove(message.getUUID());
+		if (message.isSitting()) Personality.SITTING_PLAYERS.add(message.getUUID());
+		else Personality.SITTING_PLAYERS.remove(message.getUUID());
 
 		player.recalculateSize();
 
