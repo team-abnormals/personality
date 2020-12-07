@@ -36,7 +36,7 @@ public class CommonEvents {
 
 		UUID uuid = player.getUniqueID();
 		setBesideClimbableBlock(player, player.isOnLadder());
-		if (Personality.SITTING_PLAYERS.contains(uuid) && !testCrawl(player)) {
+		if ((Personality.SITTING_PLAYERS.contains(player.getUniqueID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID())) && !testCrawl(player)) {
 			Personality.SITTING_PLAYERS.remove(uuid);
 			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new MessageS2CSyncCrawl(player.getUniqueID(), false));
 		}
@@ -67,8 +67,7 @@ public class CommonEvents {
 			return;
 
 		PlayerEntity player = (PlayerEntity) entity;
-		UUID uuid = player.getUniqueID();
-		if (Personality.SITTING_PLAYERS.contains(uuid) && testSit(player)) {
+		if ((Personality.SITTING_PLAYERS.contains(player.getUniqueID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID())) && testSit(player)) {
 			EntitySize size = PlayerEntity.STANDING_SIZE;
 
 			event.setNewSize(new EntitySize(size.width, size.height - 0.5F, size.fixed));
@@ -81,7 +80,7 @@ public class CommonEvents {
 	}
 
 	public static boolean testCrawl(PlayerEntity player) {
-		return !Personality.SITTING_PLAYERS.contains(player.getUniqueID()) && !player.isPassenger();
+		return !(Personality.SITTING_PLAYERS.contains(player.getUniqueID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID())) && !player.isPassenger();
 	}
 
 	public static boolean isClimbing(PlayerEntity player) {
@@ -106,6 +105,6 @@ public class CommonEvents {
 
 	@OnlyIn(Dist.CLIENT)
 	public static float getClimbingAnimationScale(PlayerEntity player, float partialTicks) {
-		return MathHelper.lerp(partialTicks, ((ClimbAnimation)player).getPrevClimbAnim(), ((ClimbAnimation)player).getClimbAnim()) / 4.0F;
+		return MathHelper.lerp(partialTicks, ((ClimbAnimation) player).getPrevClimbAnim(), ((ClimbAnimation) player).getClimbAnim()) / 4.0F;
 	}
 }

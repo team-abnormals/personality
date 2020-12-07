@@ -34,11 +34,11 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableMod
 	public void sitModel(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
 		if (entityIn instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) entityIn;
-			this.isSitting = Personality.SITTING_PLAYERS.contains(player.getUniqueID());
+			this.isSitting = Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID());
 		}
 	}
 
-	@Inject(method = "setRotationAngles", at = @At("TAIL"))
+	@Inject(method = "setRotationAngles", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/entity/model/BipedModel;isSitting:Z", shift = At.Shift.BEFORE))
 	public void climbAnimation(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
 		if (entityIn instanceof PlayerEntity) {
 			float f = !this.isSitting ? CommonEvents.getClimbingAnimationScale((PlayerEntity) entityIn, Animation.getPartialTickTime()) : 0.0F;
@@ -57,17 +57,6 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableMod
 			this.bipedLeftLeg.rotateAngleY = 0.0F;
 			this.bipedRightLeg.rotateAngleZ = 0.0F;
 			this.bipedLeftLeg.rotateAngleZ = 0.0F;
-
-			if (this.isSitting) {
-				this.bipedRightArm.rotateAngleX += (-(float) Math.PI / 5F);
-				this.bipedLeftArm.rotateAngleX += (-(float) Math.PI / 5F);
-				this.bipedRightLeg.rotateAngleX = -1.4137167F;
-				this.bipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
-				this.bipedRightLeg.rotateAngleZ = 0.07853982F;
-				this.bipedLeftLeg.rotateAngleX = -1.4137167F;
-				this.bipedLeftLeg.rotateAngleY = (-(float) Math.PI / 10F);
-				this.bipedLeftLeg.rotateAngleZ = -0.07853982F;
-			}
 		}
 	}
 }

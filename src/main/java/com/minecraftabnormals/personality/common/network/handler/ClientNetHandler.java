@@ -38,8 +38,8 @@ public class ClientNetHandler {
 		if (player == null)
 			return;
 
-		if (message.isSitting()) Personality.SITTING_PLAYERS.add(message.getUUID());
-		else Personality.SITTING_PLAYERS.remove(message.getUUID());
+		if (message.isSitting()) Personality.SYNCED_SITTING_PLAYERS.add(message.getUUID());
+		else Personality.SYNCED_SITTING_PLAYERS.remove(message.getUUID());
 
 		player.recalculateSize();
 

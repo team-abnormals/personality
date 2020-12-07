@@ -33,10 +33,11 @@ public class Personality {
 			.clientAcceptedVersions(NETWORK_PROTOCOL::equals)
 			.serverAcceptedVersions(NETWORK_PROTOCOL::equals)
 			.simpleChannel();
-	
+
 	public static final TrackedData<Byte> CLIMBING = TrackedData.Builder.create(DataProcessors.BYTE, () -> (byte) 0).build();
 
 	public static final Set<UUID> SITTING_PLAYERS = new HashSet<>();
+	public static final Set<UUID> SYNCED_SITTING_PLAYERS = new HashSet<>();
 
 	public Personality() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

@@ -44,13 +44,13 @@ public class ClientEvents {
 		if (PersonalityClient.SIT.isKeyDown() && !crawling && Math.abs(motion.getX()) <= 0.008 && Math.abs(motion.getZ()) <= 0.008 && CommonEvents.testSit(player)) {
 			if (!sitting) {
 				sitting = true;
-				Personality.SITTING_PLAYERS.add(player.getUniqueID());
+				Personality.SYNCED_SITTING_PLAYERS.add(player.getUniqueID());
 				player.recalculateSize();
 				Personality.CHANNEL.sendToServer(new MessageC2SSit(true));
 			}
 		} else if (sitting) {
 			sitting = false;
-			Personality.SITTING_PLAYERS.remove(player.getUniqueID());
+			Personality.SYNCED_SITTING_PLAYERS.remove(player.getUniqueID());
 			player.recalculateSize();
 			Personality.CHANNEL.sendToServer(new MessageC2SSit(false));
 		}
@@ -74,6 +74,6 @@ public class ClientEvents {
 	@SubscribeEvent
 	public static void onEvent(RenderPlayerEvent event) {
 		PlayerEntity player = event.getPlayer();
-		((SittableModel) event.getRenderer().getEntityModel()).setForcedSitting(Personality.SITTING_PLAYERS.contains(player.getUniqueID()));
+		((SittableModel) event.getRenderer().getEntityModel()).setForcedSitting(Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID()));
 	}
 }
