@@ -1,6 +1,7 @@
 package com.minecraftabnormals.personality.common.network;
 
 import com.minecraftabnormals.personality.client.ClientEvents;
+import com.minecraftabnormals.personality.common.network.handler.ClientNetHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,21 +29,7 @@ public final class MessageS2CSyncCrawl {
 	public static void handle(MessageS2CSyncCrawl message, Supplier<NetworkEvent.Context> ctx) {
 		NetworkEvent.Context context = ctx.get();
 		if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-			context.enqueueWork(() -> {
-				Minecraft minecraft = Minecraft.getInstance();
-				World world = minecraft.world;
-				if (world == null)
-					return;
-
-				PlayerEntity player = world.getPlayerByUuid(message.uuid);
-				if (player == null)
-					return;
-
-				player.setForcedPose(message.crawl ? Pose.SWIMMING : null);
-
-				if (player == minecraft.player)
-					ClientEvents.crawling = message.crawl;
-			});
+			context.enqueueWork(() -> ClientNetHandler.handleCrawlSync(message, context));
 			context.setPacketHandled(true);
 		}
 	}
@@ -50,5 +37,13 @@ public final class MessageS2CSyncCrawl {
 	public void serialize(PacketBuffer buf) {
 		buf.writeUniqueId(this.uuid);
 		buf.writeBoolean(this.crawl);
+	}
+
+	public UUID getUUID() {
+		return uuid;
+	}
+
+	public boolean isCrawling() {
+		return crawl;
 	}
 }

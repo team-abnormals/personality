@@ -2,6 +2,7 @@ package com.minecraftabnormals.personality.common.network;
 
 import com.minecraftabnormals.personality.client.ClientEvents;
 import com.minecraftabnormals.personality.client.PersonalityClient;
+import com.minecraftabnormals.personality.common.network.handler.ClientNetHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -28,24 +29,7 @@ public final class MessageS2CSyncSit {
 	public static void handle(MessageS2CSyncSit message, Supplier<NetworkEvent.Context> ctx) {
 		NetworkEvent.Context context = ctx.get();
 		if (context.getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-			context.enqueueWork(() -> {
-				Minecraft minecraft = Minecraft.getInstance();
-				World world = minecraft.world;
-				if (world == null)
-					return;
-
-				PlayerEntity player = world.getPlayerByUuid(message.uuid);
-				if (player == null)
-					return;
-
-				if (message.sitting) PersonalityClient.SITTING_PLAYERS.add(message.uuid);
-				else PersonalityClient.SITTING_PLAYERS.remove(message.uuid);
-
-				player.recalculateSize();
-
-				if (player == minecraft.player)
-					ClientEvents.sitting = message.sitting;
-			});
+			context.enqueueWork(() -> ClientNetHandler.handleSitSync(message, context));
 			context.setPacketHandled(true);
 		}
 	}
@@ -53,5 +37,13 @@ public final class MessageS2CSyncSit {
 	public void serialize(PacketBuffer buf) {
 		buf.writeUniqueId(this.uuid);
 		buf.writeBoolean(this.sitting);
+	}
+
+	public UUID getUUID() {
+		return uuid;
+	}
+
+	public boolean isSitting() {
+		return sitting;
 	}
 }
