@@ -1,5 +1,8 @@
 package com.minecraftabnormals.personality.core;
 
+import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.DataProcessors;
+import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.TrackedData;
+import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.TrackedDataManager;
 import com.minecraftabnormals.personality.client.PersonalityClient;
 import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
 import com.minecraftabnormals.personality.common.network.MessageC2SSit;
@@ -30,6 +33,8 @@ public class Personality {
 			.clientAcceptedVersions(NETWORK_PROTOCOL::equals)
 			.serverAcceptedVersions(NETWORK_PROTOCOL::equals)
 			.simpleChannel();
+	
+	public static final TrackedData<Byte> CLIMBING = TrackedData.Builder.create(DataProcessors.BYTE, () -> (byte) 0).build();
 
 	public static final Set<UUID> SITTING_PLAYERS = new HashSet<>();
 
@@ -46,8 +51,7 @@ public class Personality {
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-		});
+		event.enqueueWork(() -> TrackedDataManager.INSTANCE.registerData(new ResourceLocation(Personality.MOD_ID, "climbing"), CLIMBING));
 	}
 
 	private void clientSetup(FMLClientSetupEvent event) {

@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "personality.refmap.json",
   "mixins": [
-    "EntityMixin"
+    "LivingEntityMixin",
+    "PlayerEntityMixin"
   ],
   "client": [
     "client.AgeableModelMixin",

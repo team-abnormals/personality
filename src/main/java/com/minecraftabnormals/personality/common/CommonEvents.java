@@ -1,5 +1,7 @@
 package com.minecraftabnormals.personality.common;
 
+import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.IDataManager;
+import com.minecraftabnormals.personality.client.ClimbAnimation;
 import com.minecraftabnormals.personality.common.network.MessageS2CSyncCrawl;
 import com.minecraftabnormals.personality.core.Personality;
 import net.minecraft.entity.Entity;
@@ -7,6 +9,9 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -30,6 +35,7 @@ public class CommonEvents {
 			return;
 
 		UUID uuid = player.getUniqueID();
+		setBesideClimbableBlock(player, player.isOnLadder());
 		if (Personality.SITTING_PLAYERS.contains(uuid) && !testCrawl(player)) {
 			Personality.SITTING_PLAYERS.remove(uuid);
 			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new MessageS2CSyncCrawl(player.getUniqueID(), false));
@@ -76,5 +82,30 @@ public class CommonEvents {
 
 	public static boolean testCrawl(PlayerEntity player) {
 		return !Personality.SITTING_PLAYERS.contains(player.getUniqueID()) && !player.isPassenger();
+	}
+
+	public static boolean isClimbing(PlayerEntity player) {
+		return !player.isOnGround() && isBesideClimbableBlock(player);
+	}
+
+	public static boolean isBesideClimbableBlock(PlayerEntity player) {
+		IDataManager data = (IDataManager) player;
+		return (data.getValue(Personality.CLIMBING) & 1) != 0;
+	}
+
+	public static void setBesideClimbableBlock(PlayerEntity player, boolean climbing) {
+		IDataManager data = (IDataManager) player;
+		byte b0 = data.getValue(Personality.CLIMBING);
+		if (climbing) {
+			b0 = (byte) (b0 | 1);
+		} else {
+			b0 = (byte) (b0 & -2);
+		}
+		data.setValue(Personality.CLIMBING, b0);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static float getClimbingAnimationScale(PlayerEntity player, float partialTicks) {
+		return MathHelper.lerp(partialTicks, ((ClimbAnimation)player).getPrevClimbAnim(), ((ClimbAnimation)player).getClimbAnim()) / 4.0F;
 	}
 }

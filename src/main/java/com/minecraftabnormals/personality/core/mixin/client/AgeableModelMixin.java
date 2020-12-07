@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AgeableModel.class)
-public final class AgeableModelMixin implements SittableModel {
+public abstract class AgeableModelMixin implements SittableModel {
 	private boolean isForcedSitting;
 
 	@Inject(at = @At("HEAD"), method = "render")
