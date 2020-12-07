@@ -8,9 +8,11 @@ license = "https://github.com/team-abnormals/personality/blob/main/LICENSE"
     version = "${file.jarVersion}"
     logoFile = "logo.png"
     authors = "Team Abnormals"
-    credits = "Jackson"
+    credits = "Jackson and bageldotjpg"
     displayName = "Personality"
-    description = '''Adds new features to players.'''
+    description = '''
+    Adds new features to players.
+    '''
 
 [[dependencies.personality]]
     modId = "minecraft"
