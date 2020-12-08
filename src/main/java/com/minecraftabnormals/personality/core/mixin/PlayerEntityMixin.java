@@ -1,6 +1,7 @@
 package com.minecraftabnormals.personality.core.mixin;
 
 import com.minecraftabnormals.personality.client.ClimbAnimation;
+import com.minecraftabnormals.personality.common.CommonEvents;
 import com.minecraftabnormals.personality.core.Personality;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -25,7 +26,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAni
 	@Inject(method = "livingTick", at = @At("TAIL"))
 	public void tickClimbAnim(CallbackInfo ci) {
 		this.prevClimbAnim = this.climbAnim;
-		if (this.isOnLadder()) {
+		if (CommonEvents.isClimbing((PlayerEntity) (Object) this)) {
 			this.climbAnim = Math.min(this.climbAnim + 1, 4.0F);
 		} else {
 			this.climbAnim = Math.max(this.climbAnim - 1, 0.0F);
