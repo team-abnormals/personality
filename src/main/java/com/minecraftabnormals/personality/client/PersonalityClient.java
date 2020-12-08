@@ -62,8 +62,9 @@ public class PersonalityClient {
 
 	private static AbstractOption[] addButtons(AbstractOption[] src, int startingIndex, AbstractOption... options) {
 		int i = startingIndex;
+		// TODO: Fix array inserting
 		for (AbstractOption option : options)
-			src = ArrayUtils.insert(i++, src, option);
+			src = ArrayUtils.add(src, option);
 		return src;
 	}
 }
