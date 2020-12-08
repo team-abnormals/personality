@@ -27,6 +27,11 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyVariable(method = "func_233629_a_", ordinal = 1, at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;prevPosZ:D", shift = At.Shift.AFTER))
 	public double swingArm(double d1) {
-		return ((LivingEntity) (Object) this instanceof PlayerEntity && CommonEvents.isClimbing(((PlayerEntity) (Object) this))) || this.isFlying ? this.getPosY() - this.prevPosY : 0.0D;
+		boolean flag = this.isFlying;
+		if(((LivingEntity) (Object) this instanceof PlayerEntity)) {
+			PlayerEntity player = (PlayerEntity) (Object) this;
+			flag |= player.lastTickPosY < player.getPosY() && CommonEvents.isClimbing(player);
+		}
+		return flag ? this.getPosY() - this.prevPosY : 0.0D;
 	}
 }
