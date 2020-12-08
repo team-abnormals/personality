@@ -35,7 +35,7 @@ public class CommonEvents {
 			return;
 
 		UUID uuid = player.getUniqueID();
-		setBesideClimbableBlock(player, player.isOnLadder());
+		setBesideClimbableBlock(player, player.isOnLadder() && (player.lastTickPosY != player.getPosY() || (player.isSneaking())));
 		if ((Personality.SITTING_PLAYERS.contains(player.getUniqueID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID())) && !testCrawl(player)) {
 			Personality.SITTING_PLAYERS.remove(uuid);
 			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new MessageS2CSyncCrawl(player.getUniqueID(), false));
