@@ -34,7 +34,8 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableMod
 	public void sitModel(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
 		if (entityIn instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) entityIn;
-			this.isSitting = Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID());
+			if (Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID()))
+				this.isSitting = true;
 		}
 	}
 
