@@ -45,15 +45,15 @@ public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableMod
             float f = !this.isSitting ? CommonEvents.getClimbingAnimationScale((PlayerEntity) entityIn, Animation.getPartialTickTime()) : 0.0F;
             float climbAnim = -f * (float) Math.PI / 2F;
 
-            this.bipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F / 1.0F + climbAnim * 1.4F;
-            this.bipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F / 1.0F + climbAnim * 1.4F;
+            this.bipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F + climbAnim * 1.4F;
+            this.bipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F + climbAnim * 1.4F;
             this.bipedRightArm.rotateAngleZ = 0.0F;
             this.bipedLeftArm.rotateAngleZ = 0.0F;
             this.bipedRightArm.rotateAngleY = -climbAnim * 0.4F;
             this.bipedLeftArm.rotateAngleY = climbAnim * 0.4F;
 
-            this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount / 1.0F + climbAnim * 0.5F;
-            this.bipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount / 1.0F + climbAnim * 0.5F;
+            this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount + climbAnim * 0.5F;
+            this.bipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount + climbAnim * 0.5F;
             this.bipedRightLeg.rotateAngleY = 0.0F;
             this.bipedLeftLeg.rotateAngleY = 0.0F;
             this.bipedRightLeg.rotateAngleZ = 0.0F;
