@@ -12,38 +12,38 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class ClientNetHandler {
 
-	public static void handleCrawlSync(MessageS2CSyncCrawl message, NetworkEvent.Context context) {
-		Minecraft minecraft = Minecraft.getInstance();
-		World world = minecraft.world;
-		if (world == null)
-			return;
+    public static void handleCrawlSync(MessageS2CSyncCrawl message, NetworkEvent.Context context) {
+        Minecraft minecraft = Minecraft.getInstance();
+        World world = minecraft.world;
+        if (world == null)
+            return;
 
-		PlayerEntity player = world.getPlayerByUuid(message.getUUID());
-		if (player == null)
-			return;
+        PlayerEntity player = world.getPlayerByUuid(message.getUUID());
+        if (player == null)
+            return;
 
-		player.setForcedPose(message.isCrawling() ? Pose.SWIMMING : null);
+        player.setForcedPose(message.isCrawling() ? Pose.SWIMMING : null);
 
-		if (player == minecraft.player)
-			ClientEvents.crawling = message.isCrawling();
-	}
+        if (player == minecraft.player)
+            ClientEvents.crawling = message.isCrawling();
+    }
 
-	public static void handleSitSync(MessageS2CSyncSit message, NetworkEvent.Context context) {
-		Minecraft minecraft = Minecraft.getInstance();
-		World world = minecraft.world;
-		if (world == null)
-			return;
+    public static void handleSitSync(MessageS2CSyncSit message, NetworkEvent.Context context) {
+        Minecraft minecraft = Minecraft.getInstance();
+        World world = minecraft.world;
+        if (world == null)
+            return;
 
-		PlayerEntity player = world.getPlayerByUuid(message.getUUID());
-		if (player == null)
-			return;
+        PlayerEntity player = world.getPlayerByUuid(message.getUUID());
+        if (player == null)
+            return;
 
-		if (message.isSitting()) Personality.SYNCED_SITTING_PLAYERS.add(message.getUUID());
-		else Personality.SYNCED_SITTING_PLAYERS.remove(message.getUUID());
+        if (message.isSitting()) Personality.SYNCED_SITTING_PLAYERS.add(message.getUUID());
+        else Personality.SYNCED_SITTING_PLAYERS.remove(message.getUUID());
 
-		player.recalculateSize();
+        player.recalculateSize();
 
-		if (player == minecraft.player)
-			ClientEvents.sitting = message.isSitting();
-	}
+        if (player == minecraft.player)
+            ClientEvents.sitting = message.isSitting();
+    }
 }

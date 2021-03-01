@@ -26,45 +26,45 @@ import java.util.UUID;
 
 @Mod(Personality.MOD_ID)
 public class Personality {
-	public static final String MOD_ID = "personality";
-	public static final String NETWORK_PROTOCOL = "1";
-	public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MOD_ID, "net"))
-			.networkProtocolVersion(() -> NETWORK_PROTOCOL)
-			.clientAcceptedVersions(NETWORK_PROTOCOL::equals)
-			.serverAcceptedVersions(NETWORK_PROTOCOL::equals)
-			.simpleChannel();
+    public static final String MOD_ID = "personality";
+    public static final String NETWORK_PROTOCOL = "1";
+    public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MOD_ID, "net"))
+            .networkProtocolVersion(() -> NETWORK_PROTOCOL)
+            .clientAcceptedVersions(NETWORK_PROTOCOL::equals)
+            .serverAcceptedVersions(NETWORK_PROTOCOL::equals)
+            .simpleChannel();
 
-	public static final TrackedData<Byte> CLIMBING = TrackedData.Builder.create(DataProcessors.BYTE, () -> (byte) 0).build();
+    public static final TrackedData<Byte> CLIMBING = TrackedData.Builder.create(DataProcessors.BYTE, () -> (byte) 0).build();
 
-	public static final Set<UUID> SITTING_PLAYERS = new HashSet<>();
-	public static final Set<UUID> SYNCED_SITTING_PLAYERS = new HashSet<>();
+    public static final Set<UUID> SITTING_PLAYERS = new HashSet<>();
+    public static final Set<UUID> SYNCED_SITTING_PLAYERS = new HashSet<>();
 
-	public Personality() {
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+    public Personality() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		this.networkSetup();
+        this.networkSetup();
 
-		bus.addListener(this::commonSetup);
-		bus.addListener(this::clientSetup);
+        bus.addListener(this::commonSetup);
+        bus.addListener(this::clientSetup);
 
-		MinecraftForge.EVENT_BUS.register(this);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PersonalityConfig.CLIENT_SPEC);
-	}
+        MinecraftForge.EVENT_BUS.register(this);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PersonalityConfig.CLIENT_SPEC);
+    }
 
-	private void commonSetup(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> TrackedDataManager.INSTANCE.registerData(new ResourceLocation(Personality.MOD_ID, "climbing"), CLIMBING));
-	}
+    private void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> TrackedDataManager.INSTANCE.registerData(new ResourceLocation(Personality.MOD_ID, "climbing"), CLIMBING));
+    }
 
-	private void clientSetup(FMLClientSetupEvent event) {
-		event.enqueueWork(PersonalityClient::registerKeyBinds);
-	}
+    private void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(PersonalityClient::registerKeyBinds);
+    }
 
-	private void networkSetup() {
-		int id = -1;
+    private void networkSetup() {
+        int id = -1;
 
-		CHANNEL.registerMessage(id++, MessageC2SCrawl.class, MessageC2SCrawl::serialize, MessageC2SCrawl::deserialize, MessageC2SCrawl::handle);
-		CHANNEL.registerMessage(id++, MessageC2SSit.class, MessageC2SSit::serialize, MessageC2SSit::deserialize, MessageC2SSit::handle);
-		CHANNEL.registerMessage(id++, MessageS2CSyncCrawl.class, MessageS2CSyncCrawl::serialize, MessageS2CSyncCrawl::deserialize, MessageS2CSyncCrawl::handle);
-		CHANNEL.registerMessage(id, MessageS2CSyncSit.class, MessageS2CSyncSit::serialize, MessageS2CSyncSit::deserialize, MessageS2CSyncSit::handle);
-	}
+        CHANNEL.registerMessage(id++, MessageC2SCrawl.class, MessageC2SCrawl::serialize, MessageC2SCrawl::deserialize, MessageC2SCrawl::handle);
+        CHANNEL.registerMessage(id++, MessageC2SSit.class, MessageC2SSit::serialize, MessageC2SSit::deserialize, MessageC2SSit::handle);
+        CHANNEL.registerMessage(id++, MessageS2CSyncCrawl.class, MessageS2CSyncCrawl::serialize, MessageS2CSyncCrawl::deserialize, MessageS2CSyncCrawl::handle);
+        CHANNEL.registerMessage(id, MessageS2CSyncSit.class, MessageS2CSyncSit::serialize, MessageS2CSyncSit::deserialize, MessageS2CSyncSit::handle);
+    }
 }

@@ -13,13 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
-	public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
-		super(world, profile);
-	}
+    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+        super(world, profile);
+    }
 
-	@Inject(method = "isCrouching", at = @At("HEAD"), cancellable = true)
-	public void stopCrouch(CallbackInfoReturnable<Boolean> cir) {
-		if (Personality.SYNCED_SITTING_PLAYERS.contains(this.getUniqueID()) || this.getForcedPose() == Pose.SWIMMING)
-			cir.setReturnValue(false);
-	}
+    @Inject(method = "isCrouching", at = @At("HEAD"), cancellable = true)
+    public void stopCrouch(CallbackInfoReturnable<Boolean> cir) {
+        if (Personality.SYNCED_SITTING_PLAYERS.contains(this.getUniqueID()) || this.getForcedPose() == Pose.SWIMMING)
+            cir.setReturnValue(false);
+    }
 }

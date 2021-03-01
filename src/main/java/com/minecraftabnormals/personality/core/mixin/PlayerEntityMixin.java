@@ -16,41 +16,41 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAnimation {
-	private float climbAnim;
-	private float prevClimbAnim;
+    private float climbAnim;
+    private float prevClimbAnim;
 
-	public PlayerEntityMixin(EntityType<? extends LivingEntity> type, World worldIn) {
-		super(type, worldIn);
-	}
+    public PlayerEntityMixin(EntityType<? extends LivingEntity> type, World worldIn) {
+        super(type, worldIn);
+    }
 
-	@Inject(method = "livingTick", at = @At("TAIL"))
-	public void tickClimbAnim(CallbackInfo ci) {
-		this.prevClimbAnim = this.climbAnim;
-		if (CommonEvents.isClimbing((PlayerEntity) (Object) this)) {
-			this.climbAnim = Math.min(this.climbAnim + 1, 4.0F);
-		} else {
-			this.climbAnim = Math.max(this.climbAnim - 1, 0.0F);
-		}
-	}
+    @Inject(method = "livingTick", at = @At("TAIL"))
+    public void tickClimbAnim(CallbackInfo ci) {
+        this.prevClimbAnim = this.climbAnim;
+        if (CommonEvents.isClimbing((PlayerEntity) (Object) this)) {
+            this.climbAnim = Math.min(this.climbAnim + 1, 4.0F);
+        } else {
+            this.climbAnim = Math.max(this.climbAnim - 1, 0.0F);
+        }
+    }
 
-	@Override
-	public void move(MoverType typeIn, Vector3d pos) {
-		double x = pos.getX();
-		double y = pos.getY();
-		double z = pos.getZ();
-		if (Personality.SITTING_PLAYERS.contains(this.getUniqueID()) && Math.cbrt(x * x + y * y + z * z) >= 0.185) {
-			Personality.SITTING_PLAYERS.remove(this.getUniqueID());
-		}
-		super.move(typeIn, pos);
-	}
+    @Override
+    public void move(MoverType typeIn, Vector3d pos) {
+        double x = pos.getX();
+        double y = pos.getY();
+        double z = pos.getZ();
+        if (Personality.SITTING_PLAYERS.contains(this.getUniqueID()) && Math.cbrt(x * x + y * y + z * z) >= 0.185) {
+            Personality.SITTING_PLAYERS.remove(this.getUniqueID());
+        }
+        super.move(typeIn, pos);
+    }
 
-	@Override
-	public float getClimbAnim() {
-		return this.climbAnim;
-	}
+    @Override
+    public float getClimbAnim() {
+        return this.climbAnim;
+    }
 
-	@Override
-	public float getPrevClimbAnim() {
-		return this.prevClimbAnim;
-	}
+    @Override
+    public float getPrevClimbAnim() {
+        return this.prevClimbAnim;
+    }
 }

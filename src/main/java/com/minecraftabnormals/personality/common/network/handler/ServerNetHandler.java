@@ -16,39 +16,39 @@ import java.util.UUID;
 
 public class ServerNetHandler {
 
-	public static void handleCrawl(MessageC2SCrawl message, NetworkEvent.Context context) {
-		ServerPlayerEntity player = context.getSender();
-		if (player == null)
-			return;
+    public static void handleCrawl(MessageC2SCrawl message, NetworkEvent.Context context) {
+        ServerPlayerEntity player = context.getSender();
+        if (player == null)
+            return;
 
-		UUID uuid = player.getUniqueID();
-		if (!message.isCrawling() || Personality.SITTING_PLAYERS.contains(uuid) || player.isPassenger()) {
-			player.setForcedPose(null);
-			Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncCrawl(uuid, false));
-			return;
-		}
+        UUID uuid = player.getUniqueID();
+        if (!message.isCrawling() || Personality.SITTING_PLAYERS.contains(uuid) || player.isPassenger()) {
+            player.setForcedPose(null);
+            Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncCrawl(uuid, false));
+            return;
+        }
 
-		player.setForcedPose(Pose.SWIMMING);
-		Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncCrawl(uuid, true));
-	}
+        player.setForcedPose(Pose.SWIMMING);
+        Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncCrawl(uuid, true));
+    }
 
-	public static void handleSit(MessageC2SSit message, NetworkEvent.Context context) {
-		ServerPlayerEntity player = context.getSender();
-		if (player == null)
-			return;
+    public static void handleSit(MessageC2SSit message, NetworkEvent.Context context) {
+        ServerPlayerEntity player = context.getSender();
+        if (player == null)
+            return;
 
-		UUID uuid = player.getUniqueID();
-		Set<UUID> players = Personality.SITTING_PLAYERS;
+        UUID uuid = player.getUniqueID();
+        Set<UUID> players = Personality.SITTING_PLAYERS;
 
-		if (!message.isSitting() || !CommonEvents.testSit(player)) {
-			players.remove(player.getUniqueID());
-			player.recalculateSize();
-			Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncSit(uuid, false));
-			return;
-		}
+        if (!message.isSitting() || !CommonEvents.testSit(player)) {
+            players.remove(player.getUniqueID());
+            player.recalculateSize();
+            Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncSit(uuid, false));
+            return;
+        }
 
-		players.add(player.getUniqueID());
-		player.recalculateSize();
-		Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncSit(uuid, true));
-	}
+        players.add(player.getUniqueID());
+        player.recalculateSize();
+        Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncSit(uuid, true));
+    }
 }
