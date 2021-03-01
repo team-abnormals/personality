@@ -54,7 +54,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAni
 
     @Override
     public boolean isCrouching() {
-        return super.isCrouching() || this.getForcedPose() == Pose.CROUCHING || Personality.SYNCED_SITTING_PLAYERS.contains(this.getUniqueID());
+        return super.isCrouching() || this.getForcedPose() == Pose.CROUCHING || !Personality.SYNCED_SITTING_PLAYERS.contains(this.getUniqueID());
     }
 
     @Override
