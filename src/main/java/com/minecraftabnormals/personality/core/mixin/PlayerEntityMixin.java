@@ -6,16 +6,24 @@ import com.minecraftabnormals.personality.core.Personality;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import javax.annotation.Nullable;
+
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAnimation {
+    @Shadow
+    @Nullable
+    public abstract Pose getForcedPose();
+
     private float climbAnim;
     private float prevClimbAnim;
 
@@ -42,6 +50,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAni
             Personality.SITTING_PLAYERS.remove(this.getUniqueID());
         }
         super.move(typeIn, pos);
+    }
+
+    @Override
+    public boolean isCrouching() {
+        return super.isCrouching() || this.getForcedPose() == Pose.CROUCHING || Personality.SYNCED_SITTING_PLAYERS.contains(this.getUniqueID());
     }
 
     @Override
