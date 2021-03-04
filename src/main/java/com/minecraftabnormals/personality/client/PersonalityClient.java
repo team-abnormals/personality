@@ -9,11 +9,9 @@ import net.minecraft.client.settings.ToggleableKeyBinding;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 public class PersonalityClient {
     public static final KeyBinding CRAWL = new ToggleableKeyBinding("key.personality.crawl", GLFW.GLFW_KEY_C, "key.categories.gameplay", PersonalityConfig.CLIENT.keybinds.toggleCrawl::get);
@@ -30,9 +28,7 @@ public class PersonalityClient {
             (settings, option) -> new TranslationTextComponent("options.generic_value", new TranslationTextComponent(PersonalityClient.SIT.getKeyDescription()), new TranslationTextComponent(PersonalityConfig.CLIENT.keybinds.toggleSitting.get() ? "options.key.toggle" : "options.key.hold"))
     );
 
-    static {
-        addAccessibilityOptions();
-    }
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static void registerKeyBinds() {
         CRAWL.setKeyConflictContext(KeyConflictContext.IN_GAME);
@@ -41,21 +37,11 @@ public class PersonalityClient {
         ClientRegistry.registerKeyBinding(SIT);
     }
 
-    private static void addAccessibilityOptions() {
+    public static void addAccessibilityOptions() {
         try {
-            Field optionsField = ObfuscationReflectionHelper.findField(AccessibilityScreen.class, "field_212986_a");
-            Field modifiedField = Field.class.getDeclaredField("modifiers");
-            modifiedField.setAccessible(true);
-            modifiedField.setInt(optionsField, optionsField.getModifiers() & ~Modifier.FINAL);
-
-            AbstractOption[] options = (AbstractOption[]) optionsField.get(null);
-
-            if (options == null)
-                throw new NullPointerException("Accessibility options cannot be null");
-
-            optionsField.set(null, addButtons(options, 10, PersonalityClient.CRAWL_OPTION, PersonalityClient.SIT_OPTION));
+            AccessibilityScreen.OPTIONS = addButtons(AccessibilityScreen.OPTIONS, 10, PersonalityClient.CRAWL_OPTION, PersonalityClient.SIT_OPTION);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to add accessibility options", e);
+            LOGGER.error("Error adding options to AccessibilityScreen", e);
         }
     }
 

@@ -28,7 +28,7 @@ mixin {
 
 minecraft {
     mappings channel: project.mappingsChannel, version: project.mappings
-    // accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
+    accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
     runs {
         client {
             workingDirectory project.file("run")

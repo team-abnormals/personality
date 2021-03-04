@@ -56,7 +56,10 @@ public class Personality {
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(PersonalityClient::registerKeyBinds);
+        event.enqueueWork(() -> {
+            PersonalityClient.registerKeyBinds();
+            PersonalityClient.addAccessibilityOptions();
+        });
     }
 
     private void networkSetup() {
