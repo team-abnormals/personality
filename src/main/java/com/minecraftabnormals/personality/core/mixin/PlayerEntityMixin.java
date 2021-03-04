@@ -20,8 +20,8 @@ import javax.annotation.Nullable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAnimation {
-    @Shadow
     @Nullable
+    @Shadow(remap = false)
     public abstract Pose getForcedPose();
 
     private float climbAnim;
