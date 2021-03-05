@@ -20,10 +20,6 @@ import javax.annotation.Nullable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAnimation {
-    @Nullable
-    @Shadow(remap = false)
-    public abstract Pose getForcedPose();
-
     private float climbAnim;
     private float prevClimbAnim;
 
@@ -50,11 +46,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAni
             Personality.SITTING_PLAYERS.remove(this.getUniqueID());
         }
         super.move(typeIn, pos);
-    }
-
-    @Override
-    public boolean isCrouching() {
-        return super.isCrouching() || this.getForcedPose() == Pose.CROUCHING || !Personality.SYNCED_SITTING_PLAYERS.contains(this.getUniqueID());
     }
 
     @Override

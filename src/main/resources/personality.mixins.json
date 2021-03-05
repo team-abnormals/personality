@@ -11,7 +11,8 @@
   "client": [
     "client.AgeableModelMixin",
     "client.BipedModelMixin",
-    "client.ClientPlayerEntityMixin"
+    "client.ClientPlayerEntityMixin",
+    "client.RemoteClientPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
