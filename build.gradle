@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "4.1.+", changing: true
         classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
     }
 }
@@ -16,15 +16,15 @@ apply plugin: "org.spongepowered.mixin"
 apply plugin: "eclipse"
 apply plugin: "maven-publish"
 
+mixin {
+    add sourceSets.main, "${project.modId}.refmap.json"
+}
+
 version = "${project.minecraft}-${project.modVersion}"
 group = "com.minecraftabnormals"
 archivesBaseName = project.modId
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
-
-mixin {
-    add sourceSets.main, "personality.refmap.json"
-}
 
 minecraft {
     mappings channel: project.mappingsChannel, version: project.mappings
@@ -35,8 +35,7 @@ minecraft {
             property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
             property "forge.logging.console.level", "debug"
             property "mixin.env.disableRefMap", "true"
-            arg "-mixin.config=personality.mixins.json"
-            
+            arg "-mixin.config=" + project.modId + ".mixins.json"
             mods {
                 personality {
                     source sourceSets.main
@@ -48,8 +47,7 @@ minecraft {
             property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
             property "forge.logging.console.level", "debug"
             property "mixin.env.disableRefMap", "true"
-            arg "-mixin.config=personality.mixins.json"
-            
+            arg "-mixin.config=" + project.modId + ".mixins.json"
             mods {
                 personality {
                     source sourceSets.main
@@ -60,8 +58,8 @@ minecraft {
             workingDirectory project.file("run")
             property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
             property "forge.logging.console.level", "debug"
-            args "--mod", "personality", "--all", "--output", file("src/generated/resources/")
-            
+            property "mixin.env.disableRefMap", "true"
+            args "--mod", project.modId, "--all", "--output", file("src/generated/resources/"), "--existing", file("src/main/resources")
             mods {
                 personality {
                     source sourceSets.main
@@ -92,7 +90,7 @@ jar {
                 "Implementation-Version"  : project.modVersion,
                 "Implementation-Vendor"   : "Team Abnormals",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "personality.mixins.json"
+                "MixinConfigs"            : project.modId + ".mixins.json"
         ])
     }
 }
