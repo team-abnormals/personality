@@ -7,8 +7,7 @@
   "mixins": [
   ],
   "client": [
-    "client.FishRendererMixin",
-    "client.LivingRendererMixin"
+    "client.FishRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
