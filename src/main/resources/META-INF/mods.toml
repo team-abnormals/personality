@@ -12,7 +12,7 @@ license = "https://github.com/team-abnormals/personality/blob/main/LICENSE"
     credits = "Jackson and bageldotjpg"
     displayName = "Personality"
     description = '''
-    Adds new features to players.
+    Gives the game more personality by adding new game-feel features and more!
     '''
 
 [[dependencies.personality]]

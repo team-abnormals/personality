@@ -21,7 +21,7 @@ mixin {
 }
 
 version = "${project.minecraft}-${project.modVersion}"
-group = "com.minecraftabnormals"
+group = "com.teamabnormals"
 archivesBaseName = project.modId
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = "1.8"
@@ -75,9 +75,7 @@ dependencies {
 }
 
 repositories {
-    maven {
-        url "https://maven.jaackson.me"
-    }
+    maven { url "https://maven.jaackson.me" }
 }
 
 jar {
