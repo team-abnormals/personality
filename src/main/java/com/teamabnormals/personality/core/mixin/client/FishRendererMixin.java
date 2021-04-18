@@ -38,10 +38,9 @@ public abstract class FishRendererMixin extends EntityRenderer<FishingBobberEnti
     @Unique
     private static final RenderType RENDER_TYPE = RenderType.getEntityCutoutNoCull(TEXTURE);
 
-    protected FishRendererMixin(EntityRendererManager renderManager) {
+    private FishRendererMixin(EntityRendererManager renderManager) {
         super(renderManager);
     }
-
 
     @Shadow
     private static void func_229104_a_(float p_229104_0_, float p_229104_1_, float p_229104_2_, IVertexBuilder p_229104_3_, Matrix4f p_229104_4_, float p_229104_5_) {

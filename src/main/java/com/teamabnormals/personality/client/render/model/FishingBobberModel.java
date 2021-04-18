@@ -40,7 +40,8 @@ public class FishingBobberModel extends EntityModel<FishingBobberEntity> {
     }
 
     @Override
-    public void setRotationAngles(FishingBobberEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+    public void setRotationAngles(FishingBobberEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    }
 
     @Override
     public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {

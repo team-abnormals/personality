@@ -5,9 +5,12 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "personality.refmap.json",
   "mixins": [
+    "FireballAttackGoalMixin",
+    "GhastEntityMixin"
   ],
   "client": [
     "client.FishRendererMixin",
+    "client.GhastRendererMixin",
     "client.LivingRendererMixin"
   ],
   "injectors": {

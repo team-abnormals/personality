@@ -33,7 +33,7 @@ public class LivingRendererMixin<T extends LivingEntity> {
         return rotationYaw;
     }
 
-    private static boolean isFreezing(LivingEntity entity) {
+    private boolean isFreezing(LivingEntity entity) {
         World world = entity.getEntityWorld();
         BlockPos pos = entity.getPosition();
         if (!world.isRaining())
