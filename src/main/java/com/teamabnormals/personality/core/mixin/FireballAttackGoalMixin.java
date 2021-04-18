@@ -19,7 +19,7 @@ public class FireballAttackGoalMixin {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/monster/GhastEntity;setAttacking(Z)V", shift = At.Shift.BEFORE))
     public void tick(CallbackInfo ci) {
-        if (this.attackTimer > 10 && !this.parentEntity.isAttacking())
+        if (this.attackTimer == 14)
             this.parentEntity.world.setEntityState(this.parentEntity, (byte) 4); // TODO: config
     }
 }
