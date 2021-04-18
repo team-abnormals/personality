@@ -1,6 +1,7 @@
 package com.teamabnormals.personality.core.mixin.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.teamabnormals.personality.client.PersonalityClient;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.entity.LivingEntity;
@@ -27,24 +28,9 @@ public class LivingRendererMixin<T extends LivingEntity> {
 
     @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingRenderer;applyRotations(Lnet/minecraft/entity/LivingEntity;Lcom/mojang/blaze3d/matrix/MatrixStack;FFF)V"), index = 3)
     public float applyRotations(float rotationYaw) {
-        if (isFreezing(this.entity)) {
+        if (PersonalityClient.isFreezing(this.entity)) {
             rotationYaw += (float) (Math.cos(this.entity.ticksExisted * 3.25D) * Math.PI * 0.2F);
         }
         return rotationYaw;
-    }
-
-    private boolean isFreezing(LivingEntity entity) {
-        World world = entity.getEntityWorld();
-        BlockPos pos = entity.getPosition();
-        if (!world.isRaining())
-            return false;
-        if (!world.canSeeSky(pos))
-            return false;
-        if (world.getHeight(Heightmap.Type.MOTION_BLOCKING, pos).getY() > pos.getY())
-            return false;
-
-        Biome biome = world.getBiome(pos);
-        return biome.getPrecipitation() == Biome.RainType.SNOW;
-        // TODO: config
     }
 }
