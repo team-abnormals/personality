@@ -6,7 +6,8 @@
   "refmap": "personality.refmap.json",
   "mixins": [
     "FireballAttackGoalMixin",
-    "GhastEntityMixin"
+    "GhastEntityMixin",
+    "SnowBlockMixin"
   ],
   "client": [
     "client.FishRendererMixin",
