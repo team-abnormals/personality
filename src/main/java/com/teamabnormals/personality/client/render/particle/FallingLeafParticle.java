@@ -72,8 +72,10 @@ public class FallingLeafParticle extends SpriteTexturedParticle {
             }
 
             BlockPos pos = new BlockPos(x, y, z);
-            int color = Minecraft.getInstance().getBlockColors().getColorOrMaterialColor(state, world, pos);
-
+            int color = Minecraft.getInstance().getBlockColors().getColor(state, world, pos, 0);
+            if (color == -1)
+                color = state.getMaterialColor(world, pos).colorValue;
+            
             float red = (float) (color >> 16 & 255) / 255.0F;
             float green = (float) (color >> 8 & 255) / 255.0F;
             float blue = (float) (color & 255) / 255.0F;
