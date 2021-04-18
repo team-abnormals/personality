@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,6 +28,29 @@ import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = Personality.MOD_ID, value = Dist.CLIENT)
 public class ClientEvents {
+
+    @SubscribeEvent
+    public static void onEvent(EntityViewRenderEvent.FogDensity event) {
+        if (Minecraft.getInstance().player == null || !PersonalityClient.inCave(Minecraft.getInstance().player))
+            return;
+
+        // TODO: interpolate
+
+        event.setCanceled(true);
+        event.setDensity(0.0225F);
+    }
+
+    @SubscribeEvent
+    public static void onEvent(EntityViewRenderEvent.FogColors event) {
+        if (Minecraft.getInstance().player == null || !PersonalityClient.inCave(Minecraft.getInstance().player))
+            return;
+
+        // TODO: interpolate
+
+        event.setRed(29 / 255F);
+        event.setGreen(34 / 255F);
+        event.setBlue(35 / 255F);
+    }
 
     @SubscribeEvent
     public static void onEvent(RenderHandEvent event) {
@@ -44,6 +68,9 @@ public class ClientEvents {
         BlockPos pos = event.getPos();
         BlockState state = world.getBlockState(pos);
         Random rand = event.getRandom();
+
+        if (!state.hasOpaqueCollisionShape(world, pos) && state.isIn(Blocks.CAVE_AIR) && rand.nextInt(100) == 0 && rand.nextBoolean())
+            world.addParticle(PersonalityParticles.CAVE_DUST.get(), (double) pos.getX() + rand.nextDouble(), (double) pos.getY() + rand.nextDouble(), (double) pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
 
         if (state.getBlock() instanceof LeavesBlock) { // TODO: config
             if (rand.nextInt(48) == 0) {

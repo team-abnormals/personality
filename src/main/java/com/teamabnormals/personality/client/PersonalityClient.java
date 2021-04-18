@@ -4,6 +4,7 @@ import com.teamabnormals.personality.client.render.particle.CaveDustParticle;
 import com.teamabnormals.personality.client.render.particle.FallingLeafParticle;
 import com.teamabnormals.personality.core.Personality;
 import com.teamabnormals.personality.core.registry.PersonalityParticles;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.LivingEntity;
@@ -24,6 +25,22 @@ public class PersonalityClient {
         if (PersonalityParticles.FALLING_LEAF.isPresent()) {
             manager.registerFactory(PersonalityParticles.FALLING_LEAF.get(), FallingLeafParticle.Factory::new);
         }
+        if (PersonalityParticles.CAVE_DUST.isPresent()) {
+            manager.registerFactory(PersonalityParticles.CAVE_DUST.get(), CaveDustParticle.Factory::new);
+        }
+    }
+
+    public static boolean inCave(LivingEntity entity) {
+        World world = entity.world;
+        BlockPos pos = entity.getPosition().up();
+        if (world.canSeeSky(pos.up()))
+            return false;
+        if (!world.getBlockState(pos.up()).isIn(Blocks.CAVE_AIR))
+            return false;
+        if (pos.getY() > world.getSeaLevel())
+            return false;
+
+        return true; // TODO: config
     }
 
     public static boolean isFreezing(LivingEntity entity) {

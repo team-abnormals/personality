@@ -2,6 +2,7 @@ package com.teamabnormals.personality.core.registry;
 
 import com.mojang.serialization.Codec;
 import com.teamabnormals.personality.core.Personality;
+import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleType;
 import net.minecraftforge.fml.RegistryObject;
@@ -17,4 +18,5 @@ public class PersonalityParticles {
             return BlockParticleData.func_239800_a_(this);
         }
     });
+    public static final RegistryObject<BasicParticleType> CAVE_DUST = PARTICLE_TYPES.register("cave_dust", () -> new BasicParticleType(false));
 }
