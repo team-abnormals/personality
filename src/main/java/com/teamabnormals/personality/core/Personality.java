@@ -1,6 +1,7 @@
 package com.teamabnormals.personality.core;
 
 import com.teamabnormals.personality.core.registry.PersonalityParticles;
+import com.teamabnormals.personality.core.registry.PersonalitySounds;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -15,6 +16,7 @@ public class Personality {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         PersonalityParticles.PARTICLE_TYPES.register(bus);
+        PersonalitySounds.SOUND_EVENTS.register(bus);
 
         bus.addListener(this::commonSetup);
         bus.addListener(this::clientSetup);

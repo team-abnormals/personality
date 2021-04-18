@@ -1,0 +1,17 @@
+{
+  "entity.creeper.charged.primed": {
+    "sounds": [
+      "personality:entity/creeper/charged/fuse"
+    ],
+    "subtitle": "subtitles.personality.entity.creeper.primed"
+  },
+  "entity.creeper.charged.explode": {
+    "sounds": [
+      "personality:entity/creeper/charged/explode1",
+      "personality:entity/creeper/charged/explode2",
+      "personality:entity/creeper/charged/explode3",
+      "personality:entity/creeper/charged/explode4"
+    ],
+    "subtitle": "subtitles.personality.entity.creeper.charged.explode"
+  }
+}

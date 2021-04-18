@@ -45,7 +45,7 @@ public abstract class SnowBlockMixin extends Block {
             worldIn.addEntity(fallingblockentity);
         }
     }
-    
+
     @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {

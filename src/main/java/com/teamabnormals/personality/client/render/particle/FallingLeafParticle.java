@@ -3,7 +3,11 @@ package com.teamabnormals.personality.client.render.particle;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.IAnimatedSprite;
+import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.SpriteTexturedParticle;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.util.math.BlockPos;
@@ -75,7 +79,7 @@ public class FallingLeafParticle extends SpriteTexturedParticle {
             int color = Minecraft.getInstance().getBlockColors().getColor(state, world, pos, 0);
             if (color == -1)
                 color = state.getMaterialColor(world, pos).colorValue;
-            
+
             float red = (float) (color >> 16 & 255) / 255.0F;
             float green = (float) (color >> 8 & 255) / 255.0F;
             float blue = (float) (color & 255) / 255.0F;

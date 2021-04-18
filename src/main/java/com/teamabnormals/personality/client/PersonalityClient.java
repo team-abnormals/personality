@@ -37,10 +37,7 @@ public class PersonalityClient {
             return false;
         if (!world.getBlockState(pos.up()).isIn(Blocks.CAVE_AIR))
             return false;
-        if (pos.getY() > world.getSeaLevel())
-            return false;
-
-        return true; // TODO: config
+        return pos.getY() <= world.getSeaLevel();// TODO: config
     }
 
     public static boolean isFreezing(LivingEntity entity) {
