@@ -19,7 +19,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Inject(method = "isCrouching", at = @At("HEAD"), cancellable = true)
     public void stopCrouch(CallbackInfoReturnable<Boolean> cir) {
-        if (Personality.SYNCED_SITTING_PLAYERS.contains(this.getUniqueID()) || this.getForcedPose() == Pose.SWIMMING)
+        if (Personality.SYNCED_SITTING_PLAYERS.contains(this.getUUID()) || this.getForcedPose() == Pose.SWIMMING)
             cir.setReturnValue(false);
     }
 }

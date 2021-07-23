@@ -28,7 +28,7 @@ public class ClientEvents {
         if (player == null)
             return;
 
-        if (PersonalityClient.CRAWL.isKeyDown() && !sitting && CommonEvents.testCrawl(player)) {
+        if (PersonalityClient.CRAWL.isDown() && !sitting && CommonEvents.testCrawl(player)) {
             if (!crawling) {
                 crawling = true;
                 player.setForcedPose(Pose.SWIMMING);
@@ -40,18 +40,18 @@ public class ClientEvents {
             Personality.CHANNEL.sendToServer(new MessageC2SCrawl(false));
         }
 
-        Vector3d motion = player.getMotion();
-        if (PersonalityClient.SIT.isKeyDown() && !crawling && Math.abs(motion.getX()) <= 0.008 && Math.abs(motion.getZ()) <= 0.008 && CommonEvents.testSit(player)) {
+        Vector3d motion = player.getDeltaMovement();
+        if (PersonalityClient.SIT.isDown() && !crawling && Math.abs(motion.x()) <= 0.008 && Math.abs(motion.z()) <= 0.008 && CommonEvents.testSit(player)) {
             if (!sitting) {
                 sitting = true;
-                Personality.SYNCED_SITTING_PLAYERS.add(player.getUniqueID());
-                player.recalculateSize();
+                Personality.SYNCED_SITTING_PLAYERS.add(player.getUUID());
+                player.refreshDimensions();
                 Personality.CHANNEL.sendToServer(new MessageC2SSit(true));
             }
         } else if (sitting) {
             sitting = false;
-            Personality.SYNCED_SITTING_PLAYERS.remove(player.getUniqueID());
-            player.recalculateSize();
+            Personality.SYNCED_SITTING_PLAYERS.remove(player.getUUID());
+            player.refreshDimensions();
             Personality.CHANNEL.sendToServer(new MessageC2SSit(false));
         }
     }
@@ -64,7 +64,7 @@ public class ClientEvents {
 
         PlayerEntity player = (PlayerEntity) entity;
         if (sitting && !crawling && !CommonEvents.testSit(player)) {
-            EntitySize size = PlayerEntity.STANDING_SIZE;
+            EntitySize size = PlayerEntity.STANDING_DIMENSIONS;
 
             event.setNewSize(new EntitySize(size.width, size.height - 0.5F, size.fixed));
             event.setNewEyeHeight(event.getOldEyeHeight() - 0.5F);
@@ -74,6 +74,6 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onEvent(RenderPlayerEvent event) {
         PlayerEntity player = event.getPlayer();
-        ((SittableModel) event.getRenderer().getEntityModel()).setForcedSitting(Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID()));
+        ((SittableModel) event.getRenderer().getModel()).setForcedSitting(Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID()));
     }
 }

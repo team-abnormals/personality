@@ -20,6 +20,6 @@ public abstract class RemoteClientPlayerEntityMixin extends AbstractClientPlayer
 
     @Override
     public boolean isCrouching() {
-        return super.isCrouching() && !Personality.SYNCED_SITTING_PLAYERS.contains(this.getUniqueID()) && this.getForcedPose() != Pose.SWIMMING;
+        return super.isCrouching() && !Personality.SYNCED_SITTING_PLAYERS.contains(this.getUUID()) && this.getForcedPose() != Pose.SWIMMING;
     }
 }

@@ -27,7 +27,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAni
         super(type, worldIn);
     }
 
-    @Inject(method = "livingTick", at = @At("TAIL"))
+    @Inject(method = "aiStep", at = @At("TAIL"))
     public void tickClimbAnim(CallbackInfo ci) {
         this.prevClimbAnim = this.climbAnim;
         if (CommonEvents.isClimbing((PlayerEntity) (Object) this)) {
@@ -39,11 +39,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAni
 
     @Override
     public void move(MoverType typeIn, Vector3d pos) {
-        double x = pos.getX();
-        double y = pos.getY();
-        double z = pos.getZ();
-        if (Personality.SITTING_PLAYERS.contains(this.getUniqueID()) && Math.cbrt(x * x + y * y + z * z) >= 0.185) {
-            Personality.SITTING_PLAYERS.remove(this.getUniqueID());
+        double x = pos.x();
+        double y = pos.y();
+        double z = pos.z();
+        if (Personality.SITTING_PLAYERS.contains(this.getUUID()) && Math.cbrt(x * x + y * y + z * z) >= 0.185) {
+            Personality.SITTING_PLAYERS.remove(this.getUUID());
         }
         super.move(typeIn, pos);
     }

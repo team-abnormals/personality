@@ -14,11 +14,11 @@ public class ClientNetHandler {
 
     public static void handleCrawlSync(MessageS2CSyncCrawl message, NetworkEvent.Context context) {
         Minecraft minecraft = Minecraft.getInstance();
-        World world = minecraft.world;
+        World world = minecraft.level;
         if (world == null)
             return;
 
-        PlayerEntity player = world.getPlayerByUuid(message.getUUID());
+        PlayerEntity player = world.getPlayerByUUID(message.getUUID());
         if (player == null)
             return;
 
@@ -30,18 +30,18 @@ public class ClientNetHandler {
 
     public static void handleSitSync(MessageS2CSyncSit message, NetworkEvent.Context context) {
         Minecraft minecraft = Minecraft.getInstance();
-        World world = minecraft.world;
+        World world = minecraft.level;
         if (world == null)
             return;
 
-        PlayerEntity player = world.getPlayerByUuid(message.getUUID());
+        PlayerEntity player = world.getPlayerByUUID(message.getUUID());
         if (player == null)
             return;
 
         if (message.isSitting()) Personality.SYNCED_SITTING_PLAYERS.add(message.getUUID());
         else Personality.SYNCED_SITTING_PLAYERS.remove(message.getUUID());
 
-        player.recalculateSize();
+        player.refreshDimensions();
 
         if (player == minecraft.player)
             ClientEvents.sitting = message.isSitting();

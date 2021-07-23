@@ -18,7 +18,7 @@ public final class MessageS2CSyncCrawl {
     }
 
     public static MessageS2CSyncCrawl deserialize(PacketBuffer buf) {
-        return new MessageS2CSyncCrawl(buf.readUniqueId(), buf.readBoolean());
+        return new MessageS2CSyncCrawl(buf.readUUID(), buf.readBoolean());
     }
 
     public static void handle(MessageS2CSyncCrawl message, Supplier<NetworkEvent.Context> ctx) {
@@ -30,7 +30,7 @@ public final class MessageS2CSyncCrawl {
     }
 
     public void serialize(PacketBuffer buf) {
-        buf.writeUniqueId(this.uuid);
+        buf.writeUUID(this.uuid);
         buf.writeBoolean(this.crawl);
     }
 

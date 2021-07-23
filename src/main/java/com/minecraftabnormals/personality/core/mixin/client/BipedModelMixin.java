@@ -19,45 +19,45 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class BipedModelMixin<T extends LivingEntity> extends AgeableModel<T> {
 
     @Shadow
-    public ModelRenderer bipedRightArm;
+    public ModelRenderer rightArm;
 
     @Shadow
-    public ModelRenderer bipedLeftArm;
+    public ModelRenderer leftArm;
 
     @Shadow
-    public ModelRenderer bipedRightLeg;
+    public ModelRenderer rightLeg;
 
     @Shadow
-    public ModelRenderer bipedLeftLeg;
+    public ModelRenderer leftLeg;
 
-    @Inject(method = "setRotationAngles", at = @At("HEAD"))
+    @Inject(method = "setupAnim", at = @At("HEAD"))
     public void sitModel(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         if (entityIn instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entityIn;
-            if (Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID()))
-                this.isSitting = true;
+            if (Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID()))
+                this.riding = true;
         }
     }
 
-    @Inject(method = "setRotationAngles", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/entity/model/BipedModel;isSitting:Z", shift = At.Shift.BEFORE))
+    @Inject(method = "setupAnim", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/entity/model/BipedModel;riding:Z", shift = At.Shift.BEFORE))
     public void climbAnimation(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         if (entityIn instanceof PlayerEntity) {
-            float f = !this.isSitting ? CommonEvents.getClimbingAnimationScale((PlayerEntity) entityIn, Animation.getPartialTickTime()) : 0.0F;
+            float f = !this.riding ? CommonEvents.getClimbingAnimationScale((PlayerEntity) entityIn, Animation.getPartialTickTime()) : 0.0F;
             float climbAnim = -f * (float) Math.PI / 2F;
 
-            this.bipedRightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F + climbAnim * 1.4F;
-            this.bipedLeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F + climbAnim * 1.4F;
-            this.bipedRightArm.rotateAngleZ = 0.0F;
-            this.bipedLeftArm.rotateAngleZ = 0.0F;
-            this.bipedRightArm.rotateAngleY = -climbAnim * 0.4F;
-            this.bipedLeftArm.rotateAngleY = climbAnim * 0.4F;
+            this.rightArm.xRot = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F + climbAnim * 1.4F;
+            this.leftArm.xRot = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F + climbAnim * 1.4F;
+            this.rightArm.zRot = 0.0F;
+            this.leftArm.zRot = 0.0F;
+            this.rightArm.yRot = -climbAnim * 0.4F;
+            this.leftArm.yRot = climbAnim * 0.4F;
 
-            this.bipedRightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount + climbAnim * 0.5F;
-            this.bipedLeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount + climbAnim * 0.5F;
-            this.bipedRightLeg.rotateAngleY = 0.0F;
-            this.bipedLeftLeg.rotateAngleY = 0.0F;
-            this.bipedRightLeg.rotateAngleZ = 0.0F;
-            this.bipedLeftLeg.rotateAngleZ = 0.0F;
+            this.rightLeg.xRot = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount + climbAnim * 0.5F;
+            this.leftLeg.xRot = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount + climbAnim * 0.5F;
+            this.rightLeg.yRot = 0.0F;
+            this.leftLeg.yRot = 0.0F;
+            this.rightLeg.zRot = 0.0F;
+            this.leftLeg.zRot = 0.0F;
         }
     }
 }

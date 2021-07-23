@@ -18,14 +18,14 @@ public class PersonalityClient {
     public static final KeyBinding SIT = new ToggleableKeyBinding("key.personality.sit", GLFW.GLFW_KEY_Z, "key.categories.gameplay", PersonalityConfig.CLIENT.keybinds.toggleSitting::get);
 
     public static final IteratableOption CRAWL_OPTION = new IteratableOption(
-            PersonalityClient.CRAWL.getKeyDescription(),
+            PersonalityClient.CRAWL.getName(),
             (settings, value) -> PersonalityConfig.CLIENT.keybinds.toggleCrawl.set(!PersonalityConfig.CLIENT.keybinds.toggleCrawl.get()),
-            (settings, option) -> new TranslationTextComponent("options.generic_value", new TranslationTextComponent(PersonalityClient.CRAWL.getKeyDescription()), new TranslationTextComponent(PersonalityConfig.CLIENT.keybinds.toggleCrawl.get() ? "options.key.toggle" : "options.key.hold"))
+            (settings, option) -> new TranslationTextComponent("options.generic_value", new TranslationTextComponent(PersonalityClient.CRAWL.getName()), new TranslationTextComponent(PersonalityConfig.CLIENT.keybinds.toggleCrawl.get() ? "options.key.toggle" : "options.key.hold"))
     );
     public static final IteratableOption SIT_OPTION = new IteratableOption(
-            PersonalityClient.SIT.getKeyDescription(),
+            PersonalityClient.SIT.getName(),
             (settings, value) -> PersonalityConfig.CLIENT.keybinds.toggleSitting.set(!PersonalityConfig.CLIENT.keybinds.toggleSitting.get()),
-            (settings, option) -> new TranslationTextComponent("options.generic_value", new TranslationTextComponent(PersonalityClient.SIT.getKeyDescription()), new TranslationTextComponent(PersonalityConfig.CLIENT.keybinds.toggleSitting.get() ? "options.key.toggle" : "options.key.hold"))
+            (settings, option) -> new TranslationTextComponent("options.generic_value", new TranslationTextComponent(PersonalityClient.SIT.getName()), new TranslationTextComponent(PersonalityConfig.CLIENT.keybinds.toggleSitting.get() ? "options.key.toggle" : "options.key.hold"))
     );
 
     private static final Logger LOGGER = LogManager.getLogger();

@@ -34,11 +34,11 @@ public class CommonEvents {
         if (!(player instanceof ServerPlayerEntity))
             return;
 
-        UUID uuid = player.getUniqueID();
-        setBesideClimbableBlock(player, player.isOnLadder() && (player.lastTickPosY != player.getPosY() || (player.isSneaking())));
-        if ((Personality.SITTING_PLAYERS.contains(player.getUniqueID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID())) && !testCrawl(player)) {
+        UUID uuid = player.getUUID();
+        setBesideClimbableBlock(player, player.onClimbable() && (player.yOld != player.getY() || (player.isShiftKeyDown())));
+        if ((Personality.SITTING_PLAYERS.contains(player.getUUID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID())) && !testCrawl(player)) {
             Personality.SITTING_PLAYERS.remove(uuid);
-            Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new MessageS2CSyncCrawl(player.getUniqueID(), false));
+            Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new MessageS2CSyncCrawl(player.getUUID(), false));
         }
     }
 
@@ -47,7 +47,7 @@ public class CommonEvents {
         Entity entity = event.getTarget();
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new MessageS2CSyncCrawl(player.getUniqueID(), player.getForcedPose() == Pose.SWIMMING));
+            Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), player.getForcedPose() == Pose.SWIMMING));
         }
     }
 
@@ -56,7 +56,7 @@ public class CommonEvents {
         Entity entity = event.getTarget();
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new MessageS2CSyncCrawl(player.getUniqueID(), false));
+            Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), false));
         }
     }
 
@@ -67,8 +67,8 @@ public class CommonEvents {
             return;
 
         PlayerEntity player = (PlayerEntity) entity;
-        if ((Personality.SITTING_PLAYERS.contains(player.getUniqueID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID())) && testSit(player)) {
-            EntitySize size = PlayerEntity.STANDING_SIZE;
+        if ((Personality.SITTING_PLAYERS.contains(player.getUUID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID())) && testSit(player)) {
+            EntitySize size = PlayerEntity.STANDING_DIMENSIONS;
 
             event.setNewSize(new EntitySize(size.width, size.height - 0.5F, size.fixed));
             event.setNewEyeHeight(player.getStandingEyeHeight(Pose.STANDING, size) - 0.5F);
@@ -80,7 +80,7 @@ public class CommonEvents {
     }
 
     public static boolean testCrawl(PlayerEntity player) {
-        return !(Personality.SITTING_PLAYERS.contains(player.getUniqueID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUniqueID())) && !player.isPassenger();
+        return !(Personality.SITTING_PLAYERS.contains(player.getUUID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID())) && !player.isPassenger();
     }
 
     public static boolean isClimbing(PlayerEntity player) {

@@ -18,7 +18,7 @@ public final class MessageS2CSyncSit {
     }
 
     public static MessageS2CSyncSit deserialize(PacketBuffer buf) {
-        return new MessageS2CSyncSit(buf.readUniqueId(), buf.readBoolean());
+        return new MessageS2CSyncSit(buf.readUUID(), buf.readBoolean());
     }
 
     public static void handle(MessageS2CSyncSit message, Supplier<NetworkEvent.Context> ctx) {
@@ -30,7 +30,7 @@ public final class MessageS2CSyncSit {
     }
 
     public void serialize(PacketBuffer buf) {
-        buf.writeUniqueId(this.uuid);
+        buf.writeUUID(this.uuid);
         buf.writeBoolean(this.sitting);
     }
 
