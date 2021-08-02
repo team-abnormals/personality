@@ -1,5 +1,6 @@
 package com.minecraftabnormals.personality.core;
 
+import com.minecraftabnormals.abnormals_core.core.annotations.ConfigKey;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -26,7 +27,11 @@ public class PersonalityConfig {
     }
 
     public static class Keybindings {
+
+        @ConfigKey("toggle_crawl_enabled")
         public final ForgeConfigSpec.BooleanValue toggleCrawl;
+
+        @ConfigKey("toggle_sitting_enabled")
         public final ForgeConfigSpec.BooleanValue toggleSitting;
 
         public Keybindings(ForgeConfigSpec.Builder builder) {

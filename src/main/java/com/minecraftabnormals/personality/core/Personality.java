@@ -3,6 +3,7 @@ package com.minecraftabnormals.personality.core;
 import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.DataProcessors;
 import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.TrackedData;
 import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.TrackedDataManager;
+import com.minecraftabnormals.abnormals_core.core.util.DataUtil;
 import com.minecraftabnormals.personality.client.PersonalityClient;
 import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
 import com.minecraftabnormals.personality.common.network.MessageC2SSit;
@@ -49,6 +50,7 @@ public class Personality {
 
         MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PersonalityConfig.CLIENT_SPEC);
+        DataUtil.registerConfigCondition(Personality.MOD_ID, PersonalityConfig.CLIENT);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
