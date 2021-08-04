@@ -6,17 +6,13 @@ import com.minecraftabnormals.personality.core.Personality;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import javax.annotation.Nullable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAnimation {
@@ -27,7 +23,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAni
         super(type, worldIn);
     }
 
-    @Inject(method = "aiStep", at = @At("TAIL"))
+    @Inject(method = "aiStep()V", at = @At("TAIL"))
     public void tickClimbAnim(CallbackInfo ci) {
         this.prevClimbAnim = this.climbAnim;
         if (CommonEvents.isClimbing((PlayerEntity) (Object) this)) {

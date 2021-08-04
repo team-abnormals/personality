@@ -41,13 +41,13 @@ public class Personality {
 
     public Personality() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        MinecraftForge.EVENT_BUS.register(this);
 
-        this.networkSetup();
+        this.setupMessages();
 
         bus.addListener(this::commonSetup);
         bus.addListener(this::clientSetup);
 
-        MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PersonalityConfig.CLIENT_SPEC);
     }
 
@@ -62,7 +62,7 @@ public class Personality {
         });
     }
 
-    private void networkSetup() {
+    private void setupMessages() {
         int id = -1;
 
         CHANNEL.registerMessage(id++, MessageC2SCrawl.class, MessageC2SCrawl::serialize, MessageC2SCrawl::deserialize, MessageC2SCrawl::handle);

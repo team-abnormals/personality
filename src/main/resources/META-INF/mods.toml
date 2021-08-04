@@ -7,16 +7,15 @@ license = "https://github.com/team-abnormals/personality/blob/main/LICENSE"
     modId = "personality"
     version = "${file.jarVersion}"
     logoFile = "logo.png"
+    itemIcon = "minecraft:oak_stairs"
+    configBackground = "minecraft:textures/block/oak_planks.png"
     authors = "Team Abnormals"
     credits = "Jackson and bageldotjpg"
+    displayURL = "https://www.teamabnormals.com/mods/personality"
     displayName = "Personality"
     description = '''
     Adds more cosmetic features and animations to players, as well as new player actions like sitting and crawling.
     '''
-
-[modproperties.personality]
-    catalogueItemIcon = "minecraft:oak_stairs"
-    configuredBackground = "minecraft:textures/block/oak_planks.png"
 
 [[dependencies.personality]]
     modId = "minecraft"
@@ -28,7 +27,7 @@ license = "https://github.com/team-abnormals/personality/blob/main/LICENSE"
 [[dependencies.personality]]
     modId = "forge"
     mandatory = true
-    versionRange = "[36.1.0,)"
+    versionRange = "[36.2.0,)"
     ordering = "NONE"
     side = "BOTH"
 
