@@ -1,5 +1,5 @@
 package com.minecraftabnormals.personality.client;
 
 public interface SittableModel {
-    void setForcedSitting(boolean sitting);
+	void setForcedSitting(boolean sitting);
 }

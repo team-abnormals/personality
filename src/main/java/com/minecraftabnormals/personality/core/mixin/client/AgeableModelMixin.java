@@ -11,17 +11,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AgeableModel.class)
 public abstract class AgeableModelMixin implements SittableModel {
-    private boolean isForcedSitting;
+	private boolean isForcedSitting;
 
-    @Inject(at = @At("HEAD"), method = "renderToBuffer")
-    public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha, CallbackInfo info) {
-        if (this.isForcedSitting) {
-            matrixStackIn.translate(0.0F, 0.55F, 0.0F);
-        }
-    }
+	@Inject(at = @At("HEAD"), method = "renderToBuffer")
+	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha, CallbackInfo info) {
+		if (this.isForcedSitting) {
+			matrixStackIn.translate(0.0F, 0.55F, 0.0F);
+		}
+	}
 
-    @Override
-    public void setForcedSitting(boolean sitting) {
-        this.isForcedSitting = sitting;
-    }
+	@Override
+	public void setForcedSitting(boolean sitting) {
+		this.isForcedSitting = sitting;
+	}
 }

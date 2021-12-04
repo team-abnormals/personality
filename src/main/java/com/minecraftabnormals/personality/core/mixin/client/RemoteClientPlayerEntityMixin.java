@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(RemoteClientPlayerEntity.class)
 public abstract class RemoteClientPlayerEntityMixin extends AbstractClientPlayerEntity {
-    public RemoteClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
-        super(world, profile);
-    }
+	public RemoteClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+		super(world, profile);
+	}
 
-    @Override
-    public boolean isCrouching() {
-        return super.isCrouching() && !Personality.SYNCED_SITTING_PLAYERS.contains(this.getUUID()) && this.getForcedPose() != Pose.SWIMMING;
-    }
+	@Override
+	public boolean isCrouching() {
+		return super.isCrouching() && !Personality.SYNCED_SITTING_PLAYERS.contains(this.getUUID()) && this.getForcedPose() != Pose.SWIMMING;
+	}
 }
