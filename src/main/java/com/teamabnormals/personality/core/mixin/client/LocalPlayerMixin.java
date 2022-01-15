@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LocalPlayer.class)
 public abstract class LocalPlayerMixin extends AbstractClientPlayer {
+
 	public LocalPlayerMixin(ClientLevel level, GameProfile profile) {
 		super(level, profile);
 	}

@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(RemotePlayer.class)
 public abstract class RemotePlayerMixin extends AbstractClientPlayer {
+
 	public RemotePlayerMixin(ClientLevel level, GameProfile profile) {
 		super(level, profile);
 	}

@@ -26,7 +26,7 @@ import java.util.UUID;
 public class CommonEvents {
 
 	@SubscribeEvent
-	public static void onEvent(TickEvent.PlayerTickEvent event) {
+	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.side == LogicalSide.CLIENT && event.phase != TickEvent.Phase.END)
 			return;
 
@@ -43,7 +43,7 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public static void onEvent(PlayerEvent.StartTracking event) {
+	public static void onStartTrackingPlayer(PlayerEvent.StartTracking event) {
 		Entity entity = event.getTarget();
 		if (entity instanceof Player player) {
 			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), player.getForcedPose() == Pose.SWIMMING));
@@ -51,7 +51,7 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public static void onEvent(PlayerEvent.StopTracking event) {
+	public static void onStopTrackingPlayer(PlayerEvent.StopTracking event) {
 		Entity entity = event.getTarget();
 		if (entity instanceof Player player) {
 			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), false));
@@ -59,7 +59,7 @@ public class CommonEvents {
 	}
 
 	@SubscribeEvent
-	public static void onEvent(EntityEvent.Size event) {
+	public static void onEntitySize(EntityEvent.Size event) {
 		Entity entity = event.getEntity();
 		if (!(event.getEntity() instanceof Player))
 			return;

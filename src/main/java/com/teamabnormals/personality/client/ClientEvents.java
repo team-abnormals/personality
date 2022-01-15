@@ -22,7 +22,7 @@ public class ClientEvents {
 	public static boolean sitting;
 
 	@SubscribeEvent
-	public static void onEvent(TickEvent.ClientTickEvent event) {
+	public static void onClientTick(TickEvent.ClientTickEvent event) {
 		Player player = Minecraft.getInstance().player;
 		if (player == null)
 			return;
@@ -56,7 +56,7 @@ public class ClientEvents {
 	}
 
 	@SubscribeEvent
-	public static void onEvent(EntityEvent.Size event) {
+	public static void onEntitySize(EntityEvent.Size event) {
 		if (!(event.getEntity() instanceof Player player))
 			return;
 
@@ -69,7 +69,7 @@ public class ClientEvents {
 	}
 
 	@SubscribeEvent
-	public static void onEvent(RenderPlayerEvent event) {
+	public static void onRenderPlayer(RenderPlayerEvent event) {
 		Player player = event.getPlayer();
 		((SittableModel) event.getRenderer().getModel()).setForcedSitting(Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID()));
 	}

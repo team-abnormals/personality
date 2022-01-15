@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(ControlsScreen.class)
 public abstract class ControlsScreenMixin extends OptionsSubScreen {
 
-
 	public ControlsScreenMixin(Screen p_96284_, Options p_96285_, Component p_96286_) {
 		super(p_96284_, p_96285_, p_96286_);
 	}
