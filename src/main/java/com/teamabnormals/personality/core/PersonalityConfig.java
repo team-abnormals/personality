@@ -30,7 +30,7 @@ public class PersonalityConfig {
 		public final ForgeConfigSpec.BooleanValue toggleSitting;
 
 		public Keybindings(ForgeConfigSpec.Builder builder) {
-			builder.comment("Options for Personality keybindings.").push("keybindings");
+			builder.comment("Options for Personality keybindings").push("keybindings");
 			{
 				this.toggleCrawl = builder.comment("If true, crawling will be toggled on or off instead of the keybinding being held down. (Default: false)").define("toggleCrawl", false);
 				this.toggleSitting = builder.comment("If true, sitting will be toggled on or off instead of the keybinding being held down. (Default: true)").define("toggleSitting", true);

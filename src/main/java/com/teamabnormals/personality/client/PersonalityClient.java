@@ -26,7 +26,7 @@ public class PersonalityClient {
 			MOVEMENT_TOGGLE,
 			MOVEMENT_HOLD,
 			(options) -> PersonalityConfig.CLIENT.keybinds.toggleCrawl.get(),
-			(options, option, value) ->  PersonalityConfig.CLIENT.keybinds.toggleCrawl.set(value)
+			(options, option, value) -> PersonalityConfig.CLIENT.keybinds.toggleCrawl.set(value)
 	);
 
 	public static final CycleOption<Boolean> TOGGLE_SIT = CycleOption.createBinaryOption(
@@ -34,7 +34,7 @@ public class PersonalityClient {
 			MOVEMENT_TOGGLE,
 			MOVEMENT_HOLD,
 			(options) -> PersonalityConfig.CLIENT.keybinds.toggleCrawl.get(),
-			(options, option, value) ->  PersonalityConfig.CLIENT.keybinds.toggleCrawl.set(value)
+			(options, option, value) -> PersonalityConfig.CLIENT.keybinds.toggleCrawl.set(value)
 	);
 
 	private static final Logger LOGGER = LogManager.getLogger();

@@ -15,11 +15,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements ClimbAnimation {
+public abstract class PlayerMixin extends LivingEntity implements ClimbAnimation {
 	private float climbAnim;
 	private float prevClimbAnim;
 
-	public PlayerEntityMixin(EntityType<? extends LivingEntity> type, Level level) {
+	public PlayerMixin(EntityType<? extends LivingEntity> type, Level level) {
 		super(type, level);
 	}
 

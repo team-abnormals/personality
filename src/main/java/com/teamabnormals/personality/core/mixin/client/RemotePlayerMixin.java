@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(RemotePlayer.class)
 public abstract class RemotePlayerMixin extends AbstractClientPlayer {
-    public RemotePlayerMixin(ClientLevel level, GameProfile profile) {
-        super(level, profile);
-    }
+	public RemotePlayerMixin(ClientLevel level, GameProfile profile) {
+		super(level, profile);
+	}
 
-    @Override
-    public boolean isCrouching() {
-        return super.isCrouching() && !Personality.SYNCED_SITTING_PLAYERS.contains(this.getUUID()) && this.getForcedPose() != Pose.SWIMMING;
-    }
+	@Override
+	public boolean isCrouching() {
+		return super.isCrouching() && !Personality.SYNCED_SITTING_PLAYERS.contains(this.getUUID()) && this.getForcedPose() != Pose.SWIMMING;
+	}
 }
