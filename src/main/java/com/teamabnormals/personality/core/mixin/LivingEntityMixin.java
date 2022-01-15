@@ -1,11 +1,11 @@
-package com.minecraftabnormals.personality.core.mixin;
+package com.teamabnormals.personality.core.mixin;
 
-import com.minecraftabnormals.personality.common.CommonEvents;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
+import com.teamabnormals.personality.common.CommonEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LivingEntityMixin extends Entity {
 	private boolean isFlying;
 
-	public LivingEntityMixin(EntityType<?> entityTypeIn, World worldIn) {
-		super(entityTypeIn, worldIn);
+	public LivingEntityMixin(EntityType<?> entityTypeIn, Level level) {
+		super(entityTypeIn, level);
 	}
 
 	@Inject(method = "calculateEntityAnimation", at = @At("HEAD"))
@@ -25,11 +25,11 @@ public abstract class LivingEntityMixin extends Entity {
 		this.isFlying = flying;
 	}
 
-	@ModifyVariable(method = "calculateEntityAnimation", ordinal = 1, at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;zo:D", shift = At.Shift.AFTER))
+	@ModifyVariable(method = "calculateEntityAnimation", ordinal = 1, at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/LivingEntity;zo:D", shift = At.Shift.AFTER))
 	public double swingArm(double d1) {
 		boolean flag = this.isFlying;
-		if (((LivingEntity) (Object) this instanceof PlayerEntity)) {
-			PlayerEntity player = (PlayerEntity) (Object) this;
+		if ((((LivingEntity) (Object) this) instanceof Player)) {
+			Player player = (Player) (Object) this;
 			flag |= player.yOld < player.getY() && CommonEvents.isClimbing(player);
 		}
 		return flag ? this.getY() - this.yo : 0.0D;

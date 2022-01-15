@@ -1,14 +1,14 @@
-package com.minecraftabnormals.personality.core;
+package com.teamabnormals.personality.core;
 
-import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.DataProcessors;
-import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.TrackedData;
-import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.TrackedDataManager;
-import com.minecraftabnormals.personality.client.PersonalityClient;
-import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
-import com.minecraftabnormals.personality.common.network.MessageC2SSit;
-import com.minecraftabnormals.personality.common.network.MessageS2CSyncCrawl;
-import com.minecraftabnormals.personality.common.network.MessageS2CSyncSit;
-import net.minecraft.util.ResourceLocation;
+import com.teamabnormals.blueprint.common.world.storage.tracking.DataProcessors;
+import com.teamabnormals.blueprint.common.world.storage.tracking.TrackedData;
+import com.teamabnormals.blueprint.common.world.storage.tracking.TrackedDataManager;
+import com.teamabnormals.personality.client.PersonalityClient;
+import com.teamabnormals.personality.common.network.MessageC2SCrawl;
+import com.teamabnormals.personality.common.network.MessageC2SSit;
+import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
+import com.teamabnormals.personality.common.network.MessageS2CSyncSit;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -17,8 +17,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.HashSet;
 import java.util.Set;

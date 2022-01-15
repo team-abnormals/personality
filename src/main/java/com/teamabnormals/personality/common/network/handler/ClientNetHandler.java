@@ -1,24 +1,24 @@
-package com.minecraftabnormals.personality.common.network.handler;
+package com.teamabnormals.personality.common.network.handler;
 
-import com.minecraftabnormals.personality.client.ClientEvents;
-import com.minecraftabnormals.personality.common.network.MessageS2CSyncCrawl;
-import com.minecraftabnormals.personality.common.network.MessageS2CSyncSit;
-import com.minecraftabnormals.personality.core.Personality;
+import com.teamabnormals.personality.client.ClientEvents;
+import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
+import com.teamabnormals.personality.common.network.MessageS2CSyncSit;
+import com.teamabnormals.personality.core.Personality;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkEvent;
 
 public class ClientNetHandler {
 
 	public static void handleCrawlSync(MessageS2CSyncCrawl message, NetworkEvent.Context context) {
 		Minecraft minecraft = Minecraft.getInstance();
-		World world = minecraft.level;
-		if (world == null)
+		Level level = minecraft.level;
+		if (level == null)
 			return;
 
-		PlayerEntity player = world.getPlayerByUUID(message.getUUID());
+		Player player = level.getPlayerByUUID(message.getUUID());
 		if (player == null)
 			return;
 
@@ -30,11 +30,11 @@ public class ClientNetHandler {
 
 	public static void handleSitSync(MessageS2CSyncSit message, NetworkEvent.Context context) {
 		Minecraft minecraft = Minecraft.getInstance();
-		World world = minecraft.level;
-		if (world == null)
+		Level level = minecraft.level;
+		if (level == null)
 			return;
 
-		PlayerEntity player = world.getPlayerByUUID(message.getUUID());
+		Player player = level.getPlayerByUUID(message.getUUID());
 		if (player == null)
 			return;
 

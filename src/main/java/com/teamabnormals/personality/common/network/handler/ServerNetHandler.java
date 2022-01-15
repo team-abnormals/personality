@@ -1,15 +1,15 @@
-package com.minecraftabnormals.personality.common.network.handler;
+package com.teamabnormals.personality.common.network.handler;
 
-import com.minecraftabnormals.personality.common.CommonEvents;
-import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
-import com.minecraftabnormals.personality.common.network.MessageC2SSit;
-import com.minecraftabnormals.personality.common.network.MessageS2CSyncCrawl;
-import com.minecraftabnormals.personality.common.network.MessageS2CSyncSit;
-import com.minecraftabnormals.personality.core.Personality;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import com.teamabnormals.personality.common.CommonEvents;
+import com.teamabnormals.personality.common.network.MessageC2SCrawl;
+import com.teamabnormals.personality.common.network.MessageC2SSit;
+import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
+import com.teamabnormals.personality.common.network.MessageS2CSyncSit;
+import com.teamabnormals.personality.core.Personality;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Pose;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.Set;
 import java.util.UUID;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class ServerNetHandler {
 
 	public static void handleCrawl(MessageC2SCrawl message, NetworkEvent.Context context) {
-		ServerPlayerEntity player = context.getSender();
+		ServerPlayer player = context.getSender();
 		if (player == null)
 			return;
 
@@ -33,7 +33,7 @@ public class ServerNetHandler {
 	}
 
 	public static void handleSit(MessageC2SSit message, NetworkEvent.Context context) {
-		ServerPlayerEntity player = context.getSender();
+		ServerPlayer player = context.getSender();
 		if (player == null)
 			return;
 

@@ -1,9 +1,9 @@
-package com.minecraftabnormals.personality.common.network;
+package com.teamabnormals.personality.common.network;
 
-import com.minecraftabnormals.personality.common.network.handler.ServerNetHandler;
-import net.minecraft.network.PacketBuffer;
+import com.teamabnormals.personality.common.network.handler.ServerNetHandler;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -14,7 +14,7 @@ public final class MessageC2SSit {
 		this.sit = sit;
 	}
 
-	public static MessageC2SSit deserialize(PacketBuffer buf) {
+	public static MessageC2SSit deserialize(FriendlyByteBuf buf) {
 		return new MessageC2SSit(buf.readBoolean());
 	}
 
@@ -26,7 +26,7 @@ public final class MessageC2SSit {
 		}
 	}
 
-	public void serialize(PacketBuffer buf) {
+	public void serialize(FriendlyByteBuf buf) {
 		buf.writeBoolean(this.sit);
 	}
 

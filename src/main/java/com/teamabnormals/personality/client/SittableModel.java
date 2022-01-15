@@ -1,4 +1,4 @@
-package com.minecraftabnormals.personality.client;
+package com.teamabnormals.personality.client;
 
 public interface SittableModel {
 	void setForcedSitting(boolean sitting);

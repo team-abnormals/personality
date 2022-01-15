@@ -1,15 +1,14 @@
-package com.minecraftabnormals.personality.client;
+package com.teamabnormals.personality.client;
 
-import com.minecraftabnormals.personality.common.CommonEvents;
-import com.minecraftabnormals.personality.common.network.MessageC2SCrawl;
-import com.minecraftabnormals.personality.common.network.MessageC2SSit;
-import com.minecraftabnormals.personality.core.Personality;
+import com.teamabnormals.personality.common.CommonEvents;
+import com.teamabnormals.personality.common.network.MessageC2SCrawl;
+import com.teamabnormals.personality.common.network.MessageC2SSit;
+import com.teamabnormals.personality.core.Personality;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.TickEvent;
@@ -24,7 +23,7 @@ public class ClientEvents {
 
 	@SubscribeEvent
 	public static void onEvent(TickEvent.ClientTickEvent event) {
-		PlayerEntity player = Minecraft.getInstance().player;
+		Player player = Minecraft.getInstance().player;
 		if (player == null)
 			return;
 
@@ -40,7 +39,7 @@ public class ClientEvents {
 			Personality.CHANNEL.sendToServer(new MessageC2SCrawl(false));
 		}
 
-		Vector3d motion = player.getDeltaMovement();
+		Vec3 motion = player.getDeltaMovement();
 		if (PersonalityClient.SIT.isDown() && !crawling && Math.abs(motion.x()) <= 0.008 && Math.abs(motion.z()) <= 0.008 && CommonEvents.testSit(player)) {
 			if (!sitting) {
 				sitting = true;
@@ -58,22 +57,20 @@ public class ClientEvents {
 
 	@SubscribeEvent
 	public static void onEvent(EntityEvent.Size event) {
-		Entity entity = event.getEntity();
-		if (!(event.getEntity() instanceof PlayerEntity))
+		if (!(event.getEntity() instanceof Player player))
 			return;
 
-		PlayerEntity player = (PlayerEntity) entity;
 		if (sitting && !crawling && !CommonEvents.testSit(player)) {
-			EntitySize size = PlayerEntity.STANDING_DIMENSIONS;
+			EntityDimensions size = Player.STANDING_DIMENSIONS;
 
-			event.setNewSize(new EntitySize(size.width, size.height - 0.5F, size.fixed));
+			event.setNewSize(new EntityDimensions(size.width, size.height - 0.5F, size.fixed));
 			event.setNewEyeHeight(event.getOldEyeHeight() - 0.5F);
 		}
 	}
 
 	@SubscribeEvent
 	public static void onEvent(RenderPlayerEvent event) {
-		PlayerEntity player = event.getPlayer();
+		Player player = event.getPlayer();
 		((SittableModel) event.getRenderer().getModel()).setForcedSitting(Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID()));
 	}
 }

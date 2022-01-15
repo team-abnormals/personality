@@ -1,15 +1,15 @@
-package com.minecraftabnormals.personality.common;
+package com.teamabnormals.personality.common;
 
-import com.minecraftabnormals.abnormals_core.common.world.storage.tracking.IDataManager;
-import com.minecraftabnormals.personality.client.ClimbAnimation;
-import com.minecraftabnormals.personality.common.network.MessageS2CSyncCrawl;
-import com.minecraftabnormals.personality.core.Personality;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.math.MathHelper;
+import com.teamabnormals.blueprint.common.world.storage.tracking.IDataManager;
+import com.teamabnormals.personality.client.ClimbAnimation;
+import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
+import com.teamabnormals.personality.core.Personality;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
@@ -18,7 +18,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.UUID;
 
@@ -30,69 +30,67 @@ public class CommonEvents {
 		if (event.side == LogicalSide.CLIENT && event.phase != TickEvent.Phase.END)
 			return;
 
-		PlayerEntity player = event.player;
-		if (!(player instanceof ServerPlayerEntity))
+		Player player = event.player;
+		if (!(player instanceof ServerPlayer))
 			return;
 
 		UUID uuid = player.getUUID();
 		setBesideClimbableBlock(player, player.onClimbable() && (player.yOld != player.getY() || (player.isShiftKeyDown())));
 		if ((Personality.SITTING_PLAYERS.contains(player.getUUID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID())) && !testCrawl(player)) {
 			Personality.SITTING_PLAYERS.remove(uuid);
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new MessageS2CSyncCrawl(player.getUUID(), false));
+			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new MessageS2CSyncCrawl(player.getUUID(), false));
 		}
 	}
 
 	@SubscribeEvent
 	public static void onEvent(PlayerEvent.StartTracking event) {
 		Entity entity = event.getTarget();
-		if (entity instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) entity;
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), player.getForcedPose() == Pose.SWIMMING));
+		if (entity instanceof Player player) {
+			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), player.getForcedPose() == Pose.SWIMMING));
 		}
 	}
 
 	@SubscribeEvent
 	public static void onEvent(PlayerEvent.StopTracking event) {
 		Entity entity = event.getTarget();
-		if (entity instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) entity;
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), false));
+		if (entity instanceof Player player) {
+			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), false));
 		}
 	}
 
 	@SubscribeEvent
 	public static void onEvent(EntityEvent.Size event) {
 		Entity entity = event.getEntity();
-		if (!(event.getEntity() instanceof PlayerEntity))
+		if (!(event.getEntity() instanceof Player))
 			return;
 
-		PlayerEntity player = (PlayerEntity) entity;
+		Player player = (Player) entity;
 		if ((Personality.SITTING_PLAYERS.contains(player.getUUID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID())) && testSit(player)) {
-			EntitySize size = PlayerEntity.STANDING_DIMENSIONS;
+			EntityDimensions size = Player.STANDING_DIMENSIONS;
 
-			event.setNewSize(new EntitySize(size.width, size.height - 0.5F, size.fixed));
+			event.setNewSize(new EntityDimensions(size.width, size.height - 0.5F, size.fixed));
 			event.setNewEyeHeight(player.getStandingEyeHeight(Pose.STANDING, size) - 0.5F);
 		}
 	}
 
-	public static boolean testSit(PlayerEntity player) {
+	public static boolean testSit(Player player) {
 		return (player.getPose() == Pose.STANDING || player.getPose() == Pose.CROUCHING) && !player.isPassenger() && player.isOnGround();
 	}
 
-	public static boolean testCrawl(PlayerEntity player) {
+	public static boolean testCrawl(Player player) {
 		return !(Personality.SITTING_PLAYERS.contains(player.getUUID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID())) && !player.isPassenger();
 	}
 
-	public static boolean isClimbing(PlayerEntity player) {
+	public static boolean isClimbing(Player player) {
 		return !player.isOnGround() && isBesideClimbableBlock(player);
 	}
 
-	public static boolean isBesideClimbableBlock(PlayerEntity player) {
+	public static boolean isBesideClimbableBlock(Player player) {
 		IDataManager data = (IDataManager) player;
 		return (data.getValue(Personality.CLIMBING) & 1) != 0;
 	}
 
-	public static void setBesideClimbableBlock(PlayerEntity player, boolean climbing) {
+	public static void setBesideClimbableBlock(Player player, boolean climbing) {
 		IDataManager data = (IDataManager) player;
 		byte b0 = data.getValue(Personality.CLIMBING);
 		if (climbing) {
@@ -104,7 +102,7 @@ public class CommonEvents {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static float getClimbingAnimationScale(PlayerEntity player, float partialTicks) {
-		return MathHelper.lerp(partialTicks, ((ClimbAnimation) player).getPrevClimbAnim(), ((ClimbAnimation) player).getClimbAnim()) / 4.0F;
+	public static float getClimbingAnimationScale(Player player, float partialTicks) {
+		return Mth.lerp(partialTicks, ((ClimbAnimation) player).getPrevClimbAnim(), ((ClimbAnimation) player).getClimbAnim()) / 4.0F;
 	}
 }

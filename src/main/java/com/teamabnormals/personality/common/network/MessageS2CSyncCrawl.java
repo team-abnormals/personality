@@ -1,9 +1,9 @@
-package com.minecraftabnormals.personality.common.network;
+package com.teamabnormals.personality.common.network;
 
-import com.minecraftabnormals.personality.common.network.handler.ClientNetHandler;
-import net.minecraft.network.PacketBuffer;
+import com.teamabnormals.personality.common.network.handler.ClientNetHandler;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -17,7 +17,7 @@ public final class MessageS2CSyncCrawl {
 		this.crawl = crawl;
 	}
 
-	public static MessageS2CSyncCrawl deserialize(PacketBuffer buf) {
+	public static MessageS2CSyncCrawl deserialize(FriendlyByteBuf buf) {
 		return new MessageS2CSyncCrawl(buf.readUUID(), buf.readBoolean());
 	}
 
@@ -29,7 +29,7 @@ public final class MessageS2CSyncCrawl {
 		}
 	}
 
-	public void serialize(PacketBuffer buf) {
+	public void serialize(FriendlyByteBuf buf) {
 		buf.writeUUID(this.uuid);
 		buf.writeBoolean(this.crawl);
 	}
