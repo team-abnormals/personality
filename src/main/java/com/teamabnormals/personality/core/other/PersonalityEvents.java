@@ -1,4 +1,4 @@
-package com.teamabnormals.personality.common;
+package com.teamabnormals.personality.core.other;
 
 import com.teamabnormals.blueprint.common.world.storage.tracking.IDataManager;
 import com.teamabnormals.personality.client.ClimbAnimation;
@@ -17,13 +17,13 @@ import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = Personality.MOD_ID)
-public class CommonEvents {
+@EventBusSubscriber(modid = Personality.MOD_ID)
+public class PersonalityEvents {
 
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -46,7 +46,7 @@ public class CommonEvents {
 	public static void onStartTrackingPlayer(PlayerEvent.StartTracking event) {
 		Entity entity = event.getTarget();
 		if (entity instanceof Player player) {
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), player.getForcedPose() == Pose.SWIMMING));
+			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()), new MessageS2CSyncCrawl(player.getUUID(), player.getForcedPose() == Pose.SWIMMING));
 		}
 	}
 
@@ -54,7 +54,7 @@ public class CommonEvents {
 	public static void onStopTrackingPlayer(PlayerEvent.StopTracking event) {
 		Entity entity = event.getTarget();
 		if (entity instanceof Player player) {
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getPlayer()), new MessageS2CSyncCrawl(player.getUUID(), false));
+			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()), new MessageS2CSyncCrawl(player.getUUID(), false));
 		}
 	}
 

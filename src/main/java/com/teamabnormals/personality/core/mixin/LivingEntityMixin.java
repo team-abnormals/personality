@@ -1,6 +1,6 @@
 package com.teamabnormals.personality.core.mixin;
 
-import com.teamabnormals.personality.common.CommonEvents;
+import com.teamabnormals.personality.core.other.PersonalityEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +30,7 @@ public abstract class LivingEntityMixin extends Entity {
 		boolean flag = this.isFlying;
 		if ((((LivingEntity) (Object) this) instanceof Player)) {
 			Player player = (Player) (Object) this;
-			flag |= player.yOld < player.getY() && CommonEvents.isClimbing(player);
+			flag |= player.yOld < player.getY() && PersonalityEvents.isClimbing(player);
 		}
 		return flag ? this.getY() - this.yo : 0.0D;
 	}

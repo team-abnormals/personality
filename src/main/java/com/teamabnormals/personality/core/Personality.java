@@ -9,12 +9,11 @@ import com.teamabnormals.personality.common.network.MessageC2SSit;
 import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
 import com.teamabnormals.personality.common.network.MessageS2CSyncSit;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
@@ -46,20 +45,18 @@ public class Personality {
 		this.setupMessages();
 
 		bus.addListener(this::commonSetup);
-		bus.addListener(this::clientSetup);
-
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PersonalityConfig.CLIENT_SPEC);
+		bus.addListener(this::registerKeyBindings);
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> TrackedDataManager.INSTANCE.registerData(new ResourceLocation(Personality.MOD_ID, "climbing"), CLIMBING));
+		TrackedDataManager.INSTANCE.registerData(new ResourceLocation(Personality.MOD_ID, "climbing"), CLIMBING);
 	}
 
-	private void clientSetup(FMLClientSetupEvent event) {
-		event.enqueueWork(() -> {
-			PersonalityClient.registerKeyBinds();
-			PersonalityClient.addAccessibilityOptions();
-		});
+	private void registerKeyBindings(RegisterKeyMappingsEvent event) {
+		PersonalityClient.CRAWL.setKeyConflictContext(KeyConflictContext.IN_GAME);
+		PersonalityClient.SIT.setKeyConflictContext(KeyConflictContext.IN_GAME);
+		event.register(PersonalityClient.CRAWL);
+		event.register(PersonalityClient.SIT);
 	}
 
 	private void setupMessages() {

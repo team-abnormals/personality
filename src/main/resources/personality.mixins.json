@@ -9,7 +9,7 @@
     "PlayerMixin"
   ],
   "client": [
-    "client.AccessibilityOptionsScreenAccessor",
+    "client.AccessibilityOptionsScreenMixin",
     "client.AgeableListModelMixin",
     "client.ControlsScreenMixin",
     "client.HumanoidModelMixin",

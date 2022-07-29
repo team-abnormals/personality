@@ -1,9 +1,9 @@
 package com.teamabnormals.personality.common.network.handler;
 
-import com.teamabnormals.personality.client.ClientEvents;
 import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
 import com.teamabnormals.personality.common.network.MessageS2CSyncSit;
 import com.teamabnormals.personality.core.Personality;
+import com.teamabnormals.personality.core.other.PersonalityClientEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,7 @@ public class ClientNetHandler {
 		player.setForcedPose(message.isCrawling() ? Pose.SWIMMING : null);
 
 		if (player == minecraft.player)
-			ClientEvents.crawling = message.isCrawling();
+			PersonalityClientEvents.crawling = message.isCrawling();
 	}
 
 	public static void handleSitSync(MessageS2CSyncSit message, NetworkEvent.Context context) {
@@ -44,6 +44,6 @@ public class ClientNetHandler {
 		player.refreshDimensions();
 
 		if (player == minecraft.player)
-			ClientEvents.sitting = message.isSitting();
+			PersonalityClientEvents.sitting = message.isSitting();
 	}
 }

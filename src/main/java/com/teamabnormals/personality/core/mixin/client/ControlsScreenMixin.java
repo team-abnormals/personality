@@ -23,8 +23,8 @@ public abstract class ControlsScreenMixin extends OptionsSubScreen {
 		int xLeft = this.width / 2 - 155;
 		int xRight = xLeft + 160;
 
-		this.addRenderableWidget(PersonalityClient.TOGGLE_CRAWL.createButton(this.options, xLeft, y, 150));
-		this.addRenderableWidget(PersonalityClient.TOGGLE_SIT.createButton(this.options, xRight, y, 150));
+		this.addRenderableWidget(PersonalityClient.TOGGLE_SIT.createButton(this.options, xLeft, y, 150));
+		this.addRenderableWidget(PersonalityClient.TOGGLE_CRAWL.createButton(this.options, xRight, y, 150));
 
 		return y;
 	}

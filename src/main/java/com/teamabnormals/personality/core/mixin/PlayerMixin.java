@@ -1,8 +1,8 @@
 package com.teamabnormals.personality.core.mixin;
 
 import com.teamabnormals.personality.client.ClimbAnimation;
-import com.teamabnormals.personality.common.CommonEvents;
 import com.teamabnormals.personality.core.Personality;
+import com.teamabnormals.personality.core.other.PersonalityEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
@@ -26,7 +26,7 @@ public abstract class PlayerMixin extends LivingEntity implements ClimbAnimation
 	@Inject(method = "aiStep()V", at = @At("TAIL"))
 	public void tickClimbAnim(CallbackInfo ci) {
 		this.prevClimbAnim = this.climbAnim;
-		if (CommonEvents.isClimbing((Player) (Object) this)) {
+		if (PersonalityEvents.isClimbing((Player) (Object) this)) {
 			this.climbAnim = Math.min(this.climbAnim + 1, 4.0F);
 		} else {
 			this.climbAnim = Math.max(this.climbAnim - 1, 0.0F);

@@ -1,11 +1,11 @@
 package com.teamabnormals.personality.common.network.handler;
 
-import com.teamabnormals.personality.common.CommonEvents;
 import com.teamabnormals.personality.common.network.MessageC2SCrawl;
 import com.teamabnormals.personality.common.network.MessageC2SSit;
 import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
 import com.teamabnormals.personality.common.network.MessageS2CSyncSit;
 import com.teamabnormals.personality.core.Personality;
+import com.teamabnormals.personality.core.other.PersonalityEvents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Pose;
 import net.minecraftforge.network.NetworkEvent;
@@ -40,7 +40,7 @@ public class ServerNetHandler {
 		UUID uuid = player.getUUID();
 		Set<UUID> players = Personality.SITTING_PLAYERS;
 
-		if (!message.isSitting() || !CommonEvents.testSit(player)) {
+		if (!message.isSitting() || !PersonalityEvents.testSit(player)) {
 			players.remove(player.getUUID());
 			player.refreshDimensions();
 			Personality.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> player), new MessageS2CSyncSit(uuid, false));
