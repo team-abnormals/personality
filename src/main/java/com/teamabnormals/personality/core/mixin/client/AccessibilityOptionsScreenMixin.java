@@ -18,8 +18,8 @@ public abstract class AccessibilityOptionsScreenMixin {
 	@Inject(method = "options", at = @At("RETURN"), cancellable = true)
 	private static void stopCrouch(Options options, CallbackInfoReturnable<OptionInstance<?>[]> cir) {
 		ArrayList<OptionInstance<?>> newOptions = new ArrayList<>(Arrays.stream(cir.getReturnValue()).toList());
-		newOptions.add(10, PersonalityClient.TOGGLE_SIT);
-		newOptions.add(11, PersonalityClient.TOGGLE_CRAWL);
+		newOptions.add(10, PersonalityClient.TOGGLE_CRAWL);
+		newOptions.add(11, PersonalityClient.TOGGLE_SIT);
 		cir.setReturnValue(newOptions.toArray(OptionInstance[]::new));
 	}
 }

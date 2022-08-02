@@ -11,13 +11,13 @@ public class PersonalityClient {
 	private static final Component MOVEMENT_HOLD = Component.translatable("options.key.hold");
 
 	public static final OptionInstance<Boolean> TOGGLE_CRAWL = new OptionInstance<>(
-			"key.personality.sit", OptionInstance.noTooltip(),
+			"key.personality.crawl", OptionInstance.noTooltip(),
 			(component, toggle) -> toggle ? MOVEMENT_TOGGLE : MOVEMENT_HOLD,
-			OptionInstance.BOOLEAN_VALUES, true, (p_231875_) -> {
+			OptionInstance.BOOLEAN_VALUES, false, (p_231875_) -> {
 	});
 
 	public static final OptionInstance<Boolean> TOGGLE_SIT = new OptionInstance<>(
-			"key.personality.crawl", OptionInstance.noTooltip(),
+			"key.personality.sit", OptionInstance.noTooltip(),
 			(component, toggle) -> toggle ? MOVEMENT_TOGGLE : MOVEMENT_HOLD,
 			OptionInstance.BOOLEAN_VALUES, false, (p_231875_) -> {
 	});
