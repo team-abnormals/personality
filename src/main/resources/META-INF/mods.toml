@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[32,)"
+loaderVersion = "[47,)"
 issueTrackerURL = "https://github.com/team-abnormals/personality/issues"
 license = "https://github.com/team-abnormals/personality/blob/main/LICENSE"
 
@@ -20,20 +20,20 @@ license = "https://github.com/team-abnormals/personality/blob/main/LICENSE"
 [[dependencies.personality]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.19,1.20)"
+    versionRange = "[1.20,1.21)"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.personality]]
     modId = "forge"
     mandatory = true
-    versionRange = "[41.1.0,)"
+    versionRange = "[47.1.0,)"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.personality]]
     modId = "blueprint"
     mandatory = true
-    versionRange = "[6.0.4,)"
+    versionRange = "[7.0.0,)"
     ordering = "AFTER"
     side = "BOTH"
