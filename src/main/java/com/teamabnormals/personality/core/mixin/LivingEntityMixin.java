@@ -21,17 +21,18 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 
 	@Inject(method = "calculateEntityAnimation", at = @At("HEAD"))
-	public void captureFlying(LivingEntity p_233629_1_, boolean flying, CallbackInfo ci) {
+	public void captureFlying(boolean flying, CallbackInfo ci) {
 		this.isFlying = flying;
 	}
 
-	@ModifyVariable(method = "calculateEntityAnimation", ordinal = 1, at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/LivingEntity;zo:D", shift = At.Shift.AFTER))
-	public double swingArm(double d1) {
+	//@ModifyVariable(method = "calculateEntityAnimation", ordinal = 1, at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/LivingEntity;zo:D", shift = At.Shift.AFTER))
+	@ModifyVariable(method = "calculateEntityAnimation", ordinal = 0, at = @At("STORE"))
+	private float swingArm(float f) {
 		boolean flag = this.isFlying;
 		if ((((LivingEntity) (Object) this) instanceof Player)) {
 			Player player = (Player) (Object) this;
 			flag |= player.yOld < player.getY() && PersonalityEvents.isClimbing(player);
 		}
-		return flag ? this.getY() - this.yo : 0.0D;
+		return flag ? (float)(this.getY() - this.yo) : f;
 	}
 }

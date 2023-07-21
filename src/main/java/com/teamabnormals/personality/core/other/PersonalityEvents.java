@@ -74,7 +74,7 @@ public class PersonalityEvents {
 	}
 
 	public static boolean testSit(Player player) {
-		return (player.getPose() == Pose.STANDING || player.getPose() == Pose.CROUCHING) && !player.isPassenger() && player.isOnGround();
+		return (player.getPose() == Pose.STANDING || player.getPose() == Pose.CROUCHING) && !player.isPassenger() && player.onGround();
 	}
 
 	public static boolean testCrawl(Player player) {
@@ -82,7 +82,7 @@ public class PersonalityEvents {
 	}
 
 	public static boolean isClimbing(Player player) {
-		return !player.isOnGround() && isBesideClimbableBlock(player);
+		return !player.onGround() && isBesideClimbableBlock(player);
 	}
 
 	public static boolean isBesideClimbableBlock(Player player) {
