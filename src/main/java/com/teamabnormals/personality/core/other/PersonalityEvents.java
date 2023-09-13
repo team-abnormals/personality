@@ -4,6 +4,7 @@ import com.teamabnormals.blueprint.common.world.storage.tracking.IDataManager;
 import com.teamabnormals.personality.client.ClimbAnimation;
 import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
 import com.teamabnormals.personality.core.Personality;
+import com.teamabnormals.personality.core.PersonalityConfig;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -82,7 +83,7 @@ public class PersonalityEvents {
 	}
 
 	public static boolean isClimbing(Player player) {
-		return !player.isOnGround() && isBesideClimbableBlock(player);
+		return !player.isOnGround() && isBesideClimbableBlock(player) && PersonalityConfig.CLIENT.climbingAnimation.get();
 	}
 
 	public static boolean isBesideClimbableBlock(Player player) {

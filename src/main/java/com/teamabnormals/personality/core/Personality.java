@@ -16,7 +16,9 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
@@ -43,12 +45,16 @@ public class Personality {
 
 	public Personality() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		ModLoadingContext context = ModLoadingContext.get();
+
 		MinecraftForge.EVENT_BUS.register(this);
 
 		this.setupMessages();
 
 		bus.addListener(this::commonSetup);
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(this::registerKeyBindings));
+
+		context.registerConfig(ModConfig.Type.CLIENT, PersonalityConfig.CLIENT_SPEC);
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {
