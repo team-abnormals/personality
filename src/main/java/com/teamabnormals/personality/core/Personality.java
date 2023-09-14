@@ -19,6 +19,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
@@ -52,6 +53,8 @@ public class Personality {
 		this.setupMessages();
 
 		bus.addListener(this::commonSetup);
+		bus.addListener(this::clientSetup);
+
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> bus.addListener(this::registerKeyBindings));
 
 		context.registerConfig(ModConfig.Type.CLIENT, PersonalityConfig.CLIENT_SPEC);
@@ -59,6 +62,13 @@ public class Personality {
 
 	private void commonSetup(FMLCommonSetupEvent event) {
 		TrackedDataManager.INSTANCE.registerData(new ResourceLocation(Personality.MOD_ID, "climbing"), CLIMBING);
+	}
+
+	private void clientSetup(FMLClientSetupEvent event) {
+		event.enqueueWork(() -> {
+			PersonalityClient.TOGGLE_CRAWL.set(PersonalityConfig.CLIENT.toggleCrawl.get());
+			PersonalityClient.TOGGLE_SIT.set(PersonalityConfig.CLIENT.toggleSitting.get());
+		});
 	}
 
 	@OnlyIn(Dist.CLIENT)

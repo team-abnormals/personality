@@ -1,5 +1,6 @@
 package com.teamabnormals.personality.client;
 
+import com.teamabnormals.personality.core.PersonalityConfig;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.ToggleKeyMapping;
@@ -13,14 +14,12 @@ public class PersonalityClient {
 	public static final OptionInstance<Boolean> TOGGLE_CRAWL = new OptionInstance<>(
 			"key.personality.crawl", OptionInstance.noTooltip(),
 			(component, toggle) -> toggle ? MOVEMENT_TOGGLE : MOVEMENT_HOLD,
-			OptionInstance.BOOLEAN_VALUES, false, (p_231875_) -> {
-	});
+			OptionInstance.BOOLEAN_VALUES, false, value -> PersonalityConfig.CLIENT.toggleCrawl.set(value));
 
 	public static final OptionInstance<Boolean> TOGGLE_SIT = new OptionInstance<>(
 			"key.personality.sit", OptionInstance.noTooltip(),
 			(component, toggle) -> toggle ? MOVEMENT_TOGGLE : MOVEMENT_HOLD,
-			OptionInstance.BOOLEAN_VALUES, false, (p_231875_) -> {
-	});
+			OptionInstance.BOOLEAN_VALUES, false, value -> PersonalityConfig.CLIENT.toggleSitting.set(value));
 
 	public static final KeyMapping CRAWL = new ToggleKeyMapping("key.personality.crawl", GLFW.GLFW_KEY_C, "key.categories.movement", TOGGLE_CRAWL::get);
 	public static final KeyMapping SIT = new ToggleKeyMapping("key.personality.sit", GLFW.GLFW_KEY_Z, "key.categories.movement", TOGGLE_SIT::get);
