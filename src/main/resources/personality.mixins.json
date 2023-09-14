@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "personality.refmap.json",
   "mixins": [
+    "BannerItemMixin",
     "LivingEntityMixin",
     "PlayerMixin"
   ],
