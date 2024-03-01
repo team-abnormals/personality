@@ -27,7 +27,7 @@ license = "https://github.com/team-abnormals/personality/blob/main/LICENSE"
 [[dependencies.personality]]
     modId = "forge"
     mandatory = true
-    versionRange = "[47.1.0,)"
+    versionRange = "[47.1.3,)"
     ordering = "NONE"
     side = "BOTH"
 
