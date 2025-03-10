@@ -14,9 +14,9 @@ public abstract class AgeableListModelMixin implements SittableModel {
 	private boolean isForcedSitting;
 
 	@Inject(at = @At("HEAD"), method = "renderToBuffer")
-	public void render(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha, CallbackInfo info) {
+	public void render(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color, CallbackInfo ci) {
 		if (this.isForcedSitting) {
-			matrixStackIn.translate(0.0F, 0.55F, 0.0F);
+			poseStack.translate(0.0F, 0.55F, 0.0F);
 		}
 	}
 

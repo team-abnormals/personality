@@ -2,7 +2,7 @@ package com.teamabnormals.personality.core.other;
 
 import com.teamabnormals.blueprint.common.world.storage.tracking.IDataManager;
 import com.teamabnormals.personality.client.ClimbAnimation;
-import com.teamabnormals.personality.common.network.MessageS2CSyncCrawl;
+import com.teamabnormals.personality.common.network.SyncCrawlPayload;
 import com.teamabnormals.personality.core.Personality;
 import com.teamabnormals.personality.core.PersonalityConfig;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,15 +11,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.UUID;
 
@@ -27,11 +26,8 @@ import java.util.UUID;
 public class PersonalityEvents {
 
 	@SubscribeEvent
-	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		if (event.side == LogicalSide.CLIENT && event.phase != TickEvent.Phase.END)
-			return;
-
-		Player player = event.player;
+	public static void onPlayerTick(PlayerTickEvent.Post event) {
+		Player player = event.getEntity();
 		if (!(player instanceof ServerPlayer))
 			return;
 
@@ -39,7 +35,7 @@ public class PersonalityEvents {
 		setBesideClimbableBlock(player, player.onClimbable() && (player.yOld != player.getY() || (player.isShiftKeyDown())));
 		if ((Personality.SITTING_PLAYERS.contains(player.getUUID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID())) && !testCrawl(player)) {
 			Personality.SITTING_PLAYERS.remove(uuid);
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new MessageS2CSyncCrawl(player.getUUID(), false));
+			PacketDistributor.sendToPlayer((ServerPlayer) player, new SyncCrawlPayload(player.getUUID(), false));
 		}
 	}
 
@@ -47,7 +43,7 @@ public class PersonalityEvents {
 	public static void onStartTrackingPlayer(PlayerEvent.StartTracking event) {
 		Entity entity = event.getTarget();
 		if (entity instanceof Player player) {
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()), new MessageS2CSyncCrawl(player.getUUID(), player.getForcedPose() == Pose.SWIMMING));
+			PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new SyncCrawlPayload(player.getUUID(), player.getForcedPose() == Pose.SWIMMING));
 		}
 	}
 
@@ -55,7 +51,7 @@ public class PersonalityEvents {
 	public static void onStopTrackingPlayer(PlayerEvent.StopTracking event) {
 		Entity entity = event.getTarget();
 		if (entity instanceof Player player) {
-			Personality.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getEntity()), new MessageS2CSyncCrawl(player.getUUID(), false));
+			PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new SyncCrawlPayload(player.getUUID(), false));
 		}
 	}
 
@@ -68,9 +64,7 @@ public class PersonalityEvents {
 		Player player = (Player) entity;
 		if ((Personality.SITTING_PLAYERS.contains(player.getUUID()) || Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID())) && testSit(player)) {
 			EntityDimensions size = Player.STANDING_DIMENSIONS;
-
-			event.setNewSize(new EntityDimensions(size.width, size.height - 0.5F, size.fixed));
-			event.setNewEyeHeight(player.getStandingEyeHeight(Pose.STANDING, size) - 0.5F);
+			event.setNewSize(new EntityDimensions(size.width(), size.height() - 0.5F, size.eyeHeight() - 0.5F, size.attachments(), size.fixed()));
 		}
 	}
 

@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.Villager;
 
 public class VillagerEyelidsLayer extends RenderLayer<Villager, VillagerModel<Villager>> {
-	private static final ResourceLocation LOCATION = new ResourceLocation(Personality.MOD_ID, "textures/entity/villager/eyelids.png");
+	private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(Personality.MOD_ID, "textures/entity/villager/eyelids.png");
 
 	public VillagerEyelidsLayer(RenderLayerParent<Villager, VillagerModel<Villager>> renderer) {
 		super(renderer);
@@ -27,7 +27,7 @@ public class VillagerEyelidsLayer extends RenderLayer<Villager, VillagerModel<Vi
 			if (time >= 12000 && time <= 23900) {
 				VertexConsumer builder = buffer.getBuffer(RenderType.entityCutoutNoCull(LOCATION));
 				this.getParentModel().setupAnim(villager, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-				this.getParentModel().renderToBuffer(poseStack, builder, packedLightIn, LivingEntityRenderer.getOverlayCoords(villager, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+				this.getParentModel().renderToBuffer(poseStack, builder, packedLightIn, LivingEntityRenderer.getOverlayCoords(villager, 0.0F));
 			}
 		}
 	}

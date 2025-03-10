@@ -1,8 +1,8 @@
 package com.teamabnormals.personality.core;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class PersonalityConfig {
@@ -11,7 +11,7 @@ public class PersonalityConfig {
 		public final BooleanValue equipableBanners;
 		public final BooleanValue fallingSnowLayers;
 
-		public Common(ForgeConfigSpec.Builder builder) {
+		public Common(ModConfigSpec.Builder builder) {
 			builder.push("tweaks");
 			this.equipableBanners = builder.comment("If Banners can be worn in the helmet slot").define("Equipable banners", true);
 			this.fallingSnowLayers = builder.comment("If Snow layers have gravity like Sand and Gravel").define("Falling snow layers", true);
@@ -36,7 +36,7 @@ public class PersonalityConfig {
 
 		public final BooleanValue sheepFurOverlay;
 
-		public Client(ForgeConfigSpec.Builder builder) {
+		public Client(ModConfigSpec.Builder builder) {
 			builder.push("keybindings");
 			this.toggleCrawl = builder.comment("If true, crawling will be toggled on or off instead of the keybinding being held down").define("toggleCrawl", false);
 			this.toggleSitting = builder.comment("If true, sitting will be toggled on or off instead of the keybinding being held down").define("toggleSitting", false);
@@ -60,18 +60,19 @@ public class PersonalityConfig {
 			builder.pop();
 		}
 	}
-	public static final ForgeConfigSpec COMMON_SPEC;
+
+	public static final ModConfigSpec COMMON_SPEC;
 	public static final Common COMMON;
 
-	public static final ForgeConfigSpec CLIENT_SPEC;
+	public static final ModConfigSpec CLIENT_SPEC;
 	public static final Client CLIENT;
 
 	static {
-		Pair<Common, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Common::new);
+		Pair<Common, ModConfigSpec> commonSpecPair = new ModConfigSpec.Builder().configure(Common::new);
 		COMMON_SPEC = commonSpecPair.getRight();
 		COMMON = commonSpecPair.getLeft();
 
-		Pair<Client, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
+		Pair<Client, ModConfigSpec> clientSpecPair = new ModConfigSpec.Builder().configure(Client::new);
 		CLIENT_SPEC = clientSpecPair.getRight();
 		CLIENT = clientSpecPair.getLeft();
 	}

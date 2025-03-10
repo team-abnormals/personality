@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.teamabnormals.personality.core.mixin",
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "refmap": "personality.refmap.json",
   "mixins": [
     "BannerItemMixin",
@@ -17,7 +17,6 @@
   "client": [
     "client.AccessibilityOptionsScreenMixin",
     "client.AgeableListModelMixin",
-    "client.ControlsScreenMixin",
     "client.FishingHookRendererMixin",
     "client.GhastRendererMixin",
     "client.HumanoidModelMixin",

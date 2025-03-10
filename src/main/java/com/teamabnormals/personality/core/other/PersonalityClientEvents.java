@@ -2,20 +2,21 @@ package com.teamabnormals.personality.core.other;
 
 import com.teamabnormals.personality.client.PersonalityClient;
 import com.teamabnormals.personality.client.SittableModel;
-import com.teamabnormals.personality.common.network.MessageC2SCrawl;
-import com.teamabnormals.personality.common.network.MessageC2SSit;
+import com.teamabnormals.personality.common.network.CrawlPayload;
+import com.teamabnormals.personality.common.network.SitPayload;
 import com.teamabnormals.personality.core.Personality;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
+import net.neoforged.neoforge.event.entity.EntityEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 @EventBusSubscriber(modid = Personality.MOD_ID, value = Dist.CLIENT)
 public class PersonalityClientEvents {
@@ -23,7 +24,7 @@ public class PersonalityClientEvents {
 	public static boolean sitting;
 
 	@SubscribeEvent
-	public static void onClientTick(TickEvent.ClientTickEvent event) {
+	public static void onClientTick(ClientTickEvent.Pre event) {
 		Player player = Minecraft.getInstance().player;
 		if (player == null)
 			return;
@@ -32,12 +33,12 @@ public class PersonalityClientEvents {
 			if (!crawling) {
 				crawling = true;
 				player.setForcedPose(Pose.SWIMMING);
-				Personality.CHANNEL.sendToServer(new MessageC2SCrawl(true));
+				PacketDistributor.sendToServer(new CrawlPayload(true));
 			}
 		} else if (crawling) {
 			crawling = false;
 			player.setForcedPose(null);
-			Personality.CHANNEL.sendToServer(new MessageC2SCrawl(false));
+			PacketDistributor.sendToServer(new CrawlPayload(false));
 		}
 
 		Vec3 motion = player.getDeltaMovement();
@@ -46,13 +47,13 @@ public class PersonalityClientEvents {
 				sitting = true;
 				Personality.SYNCED_SITTING_PLAYERS.add(player.getUUID());
 				player.refreshDimensions();
-				Personality.CHANNEL.sendToServer(new MessageC2SSit(true));
+				PacketDistributor.sendToServer(new SitPayload(true));
 			}
 		} else if (sitting) {
 			sitting = false;
 			Personality.SYNCED_SITTING_PLAYERS.remove(player.getUUID());
 			player.refreshDimensions();
-			Personality.CHANNEL.sendToServer(new MessageC2SSit(false));
+			PacketDistributor.sendToServer(new SitPayload(false));
 		}
 	}
 
@@ -63,15 +64,12 @@ public class PersonalityClientEvents {
 
 		if (sitting && !crawling && !PersonalityEvents.testSit(player)) {
 			EntityDimensions size = Player.STANDING_DIMENSIONS;
-
-			event.setNewSize(new EntityDimensions(size.width, size.height - 0.5F, size.fixed));
-			event.setNewEyeHeight(event.getOldEyeHeight() - 0.5F);
+			event.setNewSize(new EntityDimensions(size.width(), size.height() - 0.5F, size.eyeHeight() - 0.5F, size.attachments(), size.fixed()));
 		}
 	}
 
 	@SubscribeEvent
-	public static void onRenderPlayer(RenderPlayerEvent event) {
-		Player player = event.getEntity();
-		((SittableModel) event.getRenderer().getModel()).setForcedSitting(Personality.SYNCED_SITTING_PLAYERS.contains(player.getUUID()));
+	public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
+		((SittableModel) event.getRenderer().getModel()).setForcedSitting(Personality.SYNCED_SITTING_PLAYERS.contains(event.getEntity().getUUID()));
 	}
 }
