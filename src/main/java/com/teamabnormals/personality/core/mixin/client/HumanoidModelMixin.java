@@ -46,7 +46,7 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
 	@Inject(method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", at = @At(value = "FIELD", target = "Lnet/minecraft/client/model/HumanoidModel;riding:Z", shift = At.Shift.BEFORE))
 	public void climbAnimation(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
 		if (entityIn instanceof Player) {
-			float f = !this.riding ? PersonalityEvents.getClimbingAnimationScale((Player) entityIn, Minecraft.getInstance().getFrameTimeNs()) : 0.0F;
+			float f = !this.riding ? PersonalityEvents.getClimbingAnimationScale((Player) entityIn, Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false)) : 0.0F;
 			float climbAnim = -f * (float) Math.PI / 2F;
 
 			this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F + climbAnim * 1.4F;
