@@ -16,7 +16,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.UUID;
 
 public record SyncSitPayload(UUID uuid, boolean isSitting) implements CustomPacketPayload {
-	public static final CustomPacketPayload.Type<SyncSitPayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Personality.MOD_ID, "sync_sit"));
+	public static final CustomPacketPayload.Type<SyncSitPayload> TYPE = new CustomPacketPayload.Type<>(Personality.location("sync_sit"));
 
 	public static final StreamCodec<ByteBuf, SyncSitPayload> STREAM_CODEC = StreamCodec.composite(
 			UUIDUtil.STREAM_CODEC, SyncSitPayload::uuid,

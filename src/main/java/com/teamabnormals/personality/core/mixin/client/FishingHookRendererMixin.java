@@ -33,7 +33,7 @@ public abstract class FishingHookRendererMixin extends EntityRenderer<FishingHoo
 	@Unique
 	private static final FishingHookModel MODEL = new FishingHookModel(FishingHookModel.createBodyLayer().bakeRoot());
 	@Unique
-	private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Personality.MOD_ID, "textures/entity/fishing_bobber.png");
+	private static final ResourceLocation TEXTURE = Personality.location("textures/entity/fishing_bobber.png");
 	@Unique
 	private static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(TEXTURE);
 

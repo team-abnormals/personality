@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public record SitPayload(boolean isSitting) implements CustomPacketPayload {
-	public static final CustomPacketPayload.Type<SitPayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Personality.MOD_ID, "sit"));
+	public static final CustomPacketPayload.Type<SitPayload> TYPE = new CustomPacketPayload.Type<>(Personality.location("sit"));
 
 	public static final StreamCodec<ByteBuf, SitPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.BOOL, SitPayload::isSitting,

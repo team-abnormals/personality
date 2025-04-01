@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.Villager;
 
 public class VillagerEyelidsLayer extends RenderLayer<Villager, VillagerModel<Villager>> {
-	private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(Personality.MOD_ID, "textures/entity/villager/eyelids.png");
+	private static final ResourceLocation LOCATION = Personality.location("textures/entity/villager/eyelids.png");
 
 	public VillagerEyelidsLayer(RenderLayerParent<Villager, VillagerModel<Villager>> renderer) {
 		super(renderer);

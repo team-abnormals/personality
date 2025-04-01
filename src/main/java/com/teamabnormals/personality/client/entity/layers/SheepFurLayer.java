@@ -13,7 +13,7 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
 
 public class SheepFurLayer extends RenderLayer<Sheep, SheepModel<Sheep>> {
-	private static final ResourceLocation SHEEP_FUR_LOCATION = ResourceLocation.fromNamespaceAndPath(Personality.MOD_ID, "textures/entity/sheep/sheep_fur_overlay.png");
+	private static final ResourceLocation SHEEP_FUR_LOCATION = Personality.location("textures/entity/sheep/sheep_fur_overlay.png");
 
 	public SheepFurLayer(RenderLayerParent<Sheep, SheepModel<Sheep>> parent) {
 		super(parent);

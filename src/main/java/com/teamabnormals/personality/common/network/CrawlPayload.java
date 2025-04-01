@@ -14,7 +14,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.UUID;
 
 public record CrawlPayload(boolean isCrawling) implements CustomPacketPayload {
-	public static final CustomPacketPayload.Type<CrawlPayload> TYPE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Personality.MOD_ID, "crawl"));
+	public static final CustomPacketPayload.Type<CrawlPayload> TYPE = new CustomPacketPayload.Type<>(Personality.location("crawl"));
 
 	public static final StreamCodec<ByteBuf, CrawlPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.BOOL, CrawlPayload::isCrawling,

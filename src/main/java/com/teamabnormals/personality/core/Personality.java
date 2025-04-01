@@ -59,7 +59,7 @@ public class Personality {
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {
-		TrackedDataManager.INSTANCE.registerData(ResourceLocation.fromNamespaceAndPath(Personality.MOD_ID, "climbing"), CLIMBING);
+		TrackedDataManager.INSTANCE.registerData(Personality.location("climbing"), CLIMBING);
 	}
 
 	private void clientSetup(FMLClientSetupEvent event) {
@@ -76,7 +76,6 @@ public class Personality {
 		event.register(PersonalityClient.CRAWL);
 		event.register(PersonalityClient.SIT);
 	}
-
 
 	@OnlyIn(Dist.CLIENT)
 	private void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -106,5 +105,9 @@ public class Personality {
 		registrar.playToServer(SitPayload.TYPE, SitPayload.STREAM_CODEC, SitPayload::handle);
 		registrar.playToClient(SyncCrawlPayload.TYPE, SyncCrawlPayload.STREAM_CODEC, SyncCrawlPayload::handle);
 		registrar.playToClient(SyncSitPayload.TYPE, SyncSitPayload.STREAM_CODEC, SyncSitPayload::handle);
+	}
+
+	public static ResourceLocation location(String path) {
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}
 }
