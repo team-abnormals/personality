@@ -1,7 +1,6 @@
 package com.teamabnormals.personality.core.other;
 
-import com.teamabnormals.personality.client.PersonalityClient;
-import com.teamabnormals.personality.client.SittableModel;
+import com.teamabnormals.personality.common.extension.SittableModel;
 import com.teamabnormals.personality.common.network.CrawlPayload;
 import com.teamabnormals.personality.common.network.SitPayload;
 import com.teamabnormals.personality.core.Personality;
@@ -29,7 +28,7 @@ public class PersonalityClientEvents {
 		if (player == null)
 			return;
 
-		if (PersonalityClient.CRAWL.isDown() && !sitting && PersonalityEvents.testCrawl(player)) {
+		if (PersonalityKeyBindings.CRAWL.isDown() && !sitting && PersonalityEvents.testCrawl(player)) {
 			if (!crawling) {
 				crawling = true;
 				player.setForcedPose(Pose.SWIMMING);
@@ -42,7 +41,7 @@ public class PersonalityClientEvents {
 		}
 
 		Vec3 motion = player.getDeltaMovement();
-		if (PersonalityClient.SIT.isDown() && !crawling && Math.abs(motion.x()) <= 0.008 && Math.abs(motion.z()) <= 0.008 && PersonalityEvents.testSit(player)) {
+		if (PersonalityKeyBindings.SIT.isDown() && !crawling && Math.abs(motion.x()) <= 0.008 && Math.abs(motion.z()) <= 0.008 && PersonalityEvents.testSit(player)) {
 			if (!sitting) {
 				sitting = true;
 				Personality.SYNCED_SITTING_PLAYERS.add(player.getUUID());

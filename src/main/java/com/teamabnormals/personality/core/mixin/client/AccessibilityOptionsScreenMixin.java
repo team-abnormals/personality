@@ -1,6 +1,6 @@
 package com.teamabnormals.personality.core.mixin.client;
 
-import com.teamabnormals.personality.client.PersonalityClient;
+import com.teamabnormals.personality.core.other.PersonalityKeyBindings;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
 import org.apache.commons.compress.utils.Lists;
@@ -24,8 +24,8 @@ public abstract class AccessibilityOptionsScreenMixin {
 		for (OptionInstance<?> option : cir.getReturnValue()) {
 			optionsArray.add(option);
 			if (option == options.toggleSprint()) {
-				optionsArray.add(PersonalityClient.TOGGLE_CRAWL);
-				optionsArray.add(PersonalityClient.TOGGLE_SIT);
+				optionsArray.add(PersonalityKeyBindings.TOGGLE_CRAWL);
+				optionsArray.add(PersonalityKeyBindings.TOGGLE_SIT);
 			}
 		}
 		cir.setReturnValue(optionsArray.toArray(new OptionInstance[0]));

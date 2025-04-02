@@ -1,6 +1,6 @@
 package com.teamabnormals.personality.core.mixin;
 
-import com.teamabnormals.personality.client.ClimbAnimation;
+import com.teamabnormals.personality.common.extension.ClimbAnimation;
 import com.teamabnormals.personality.core.Personality;
 import com.teamabnormals.personality.core.other.PersonalityEvents;
 import net.minecraft.world.entity.EntityType;

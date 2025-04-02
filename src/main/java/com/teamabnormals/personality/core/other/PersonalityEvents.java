@@ -1,7 +1,7 @@
 package com.teamabnormals.personality.core.other;
 
 import com.teamabnormals.blueprint.common.world.storage.tracking.IDataManager;
-import com.teamabnormals.personality.client.ClimbAnimation;
+import com.teamabnormals.personality.common.extension.ClimbAnimation;
 import com.teamabnormals.personality.common.network.SyncCrawlPayload;
 import com.teamabnormals.personality.core.Personality;
 import com.teamabnormals.personality.core.PersonalityConfig;

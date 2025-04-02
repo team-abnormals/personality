@@ -17,7 +17,7 @@ public class GhastRendererMixin {
 	@Inject(method = "scale(Lnet/minecraft/world/entity/monster/Ghast;Lcom/mojang/blaze3d/vertex/PoseStack;F)V", at = @At("HEAD"), cancellable = true)
 	protected void preRenderCallback(Ghast entity, PoseStack matrixStack, float partialTicks, CallbackInfo ci) {
 		if (!PersonalityConfig.CLIENT.ghastAttackAnimation.get()) return;
-		
+
 		GhastExtension ext = (GhastExtension) entity;
 
 		float attack = Mth.lerp(partialTicks, ext.getPreviousAttackTimer(), ext.getAttackTimer()) / 10F;

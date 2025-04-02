@@ -2,12 +2,12 @@ package com.teamabnormals.personality.core;
 
 import com.teamabnormals.blueprint.common.world.storage.tracking.TrackedData;
 import com.teamabnormals.blueprint.common.world.storage.tracking.TrackedDataManager;
-import com.teamabnormals.personality.client.PersonalityClient;
 import com.teamabnormals.personality.client.model.FishingHookModel;
 import com.teamabnormals.personality.common.network.CrawlPayload;
 import com.teamabnormals.personality.common.network.SitPayload;
 import com.teamabnormals.personality.common.network.SyncCrawlPayload;
 import com.teamabnormals.personality.common.network.SyncSitPayload;
+import com.teamabnormals.personality.core.other.PersonalityKeyBindings;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -24,8 +24,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -49,7 +47,6 @@ public class Personality {
 		bus.addListener(this::clientSetup);
 
 		if (FMLEnvironment.dist == Dist.CLIENT) {
-			bus.addListener(this::registerKeyBindings);
 			bus.addListener(this::registerLayerDefinitions);
 			bus.addListener(this::modConfigEvent);
 		}
@@ -64,22 +61,13 @@ public class Personality {
 
 	private void clientSetup(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
-			PersonalityClient.TOGGLE_CRAWL.set(PersonalityConfig.CLIENT.toggleCrawl.get());
-			PersonalityClient.TOGGLE_SIT.set(PersonalityConfig.CLIENT.toggleSitting.get());
+			PersonalityKeyBindings.setupToggleSettings();
 		});
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private void registerKeyBindings(RegisterKeyMappingsEvent event) {
-		PersonalityClient.CRAWL.setKeyConflictContext(KeyConflictContext.IN_GAME);
-		PersonalityClient.SIT.setKeyConflictContext(KeyConflictContext.IN_GAME);
-		event.register(PersonalityClient.CRAWL);
-		event.register(PersonalityClient.SIT);
-	}
-
-	@OnlyIn(Dist.CLIENT)
 	private void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MOD_ID, "fishing_hook"), "main"), FishingHookModel::createBodyLayer);
+		event.registerLayerDefinition(new ModelLayerLocation(location("fishing_hook"), "main"), FishingHookModel::createBodyLayer);
 	}
 
 	@OnlyIn(Dist.CLIENT)

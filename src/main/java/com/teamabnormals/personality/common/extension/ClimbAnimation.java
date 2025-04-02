@@ -1,4 +1,4 @@
-package com.teamabnormals.personality.client;
+package com.teamabnormals.personality.common.extension;
 
 public interface ClimbAnimation {
 	float getClimbAnim();
