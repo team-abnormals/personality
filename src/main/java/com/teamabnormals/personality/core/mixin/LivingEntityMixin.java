@@ -29,8 +29,7 @@ public abstract class LivingEntityMixin extends Entity {
 	@ModifyVariable(method = "calculateEntityAnimation", ordinal = 0, at = @At("STORE"))
 	public float swingArm(float f) {
 		boolean flag = this.isFlying;
-		if ((((LivingEntity) (Object) this) instanceof Player)) {
-			Player player = (Player) (Object) this;
+		if (((LivingEntity) (Object) this) instanceof Player player) {
 			flag |= player.yOld < player.getY() && PersonalityEvents.isClimbing(player);
 		}
 		return (float) Mth.length(this.getX() - this.xo, flag ? this.getY() - this.yo : 0.0D, this.getZ() - this.zo);

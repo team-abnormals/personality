@@ -23,7 +23,7 @@ public abstract class PlayerMixin extends LivingEntity implements ClimbAnimation
 		super(type, level);
 	}
 
-	@Inject(method = "aiStep()V", at = @At("TAIL"))
+	@Inject(method = "tick", at = @At("TAIL"))
 	public void tickClimbAnim(CallbackInfo ci) {
 		this.prevClimbAnim = this.climbAnim;
 		if (PersonalityEvents.isClimbing((Player) (Object) this)) {
