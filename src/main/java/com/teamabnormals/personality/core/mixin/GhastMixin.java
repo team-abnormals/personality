@@ -34,7 +34,7 @@ public abstract class GhastMixin extends FlyingMob implements GhastExtension {
 
 	@Override
 	public void handleEntityEvent(byte id) {
-		if (PersonalityConfig.CLIENT.ghastAttackAnimation.get() && id == 4) {
+		if (this.level().isClientSide() && PersonalityConfig.CLIENT.ghastAttackAnimation.get() && id == 4) {
 			this.prevAttackTimer = 10;
 			this.attackTimer = 10;
 			return;

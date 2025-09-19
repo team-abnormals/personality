@@ -1,6 +1,5 @@
 package com.teamabnormals.personality.core.mixin;
 
-import com.teamabnormals.personality.core.PersonalityConfig;
 import net.minecraft.world.entity.monster.Ghast;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +20,7 @@ public class GhastShootFireballGoalMixin {
 
 	@Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/Ghast;setCharging(Z)V", shift = At.Shift.BEFORE))
 	public void tick(CallbackInfo ci) {
-		if (this.chargeTime == 14 && PersonalityConfig.CLIENT.ghastAttackAnimation.get()) {
+		if (this.chargeTime == 14) {
 			this.ghast.level().broadcastEntityEvent(this.ghast, (byte) 4);
 		}
 	}
