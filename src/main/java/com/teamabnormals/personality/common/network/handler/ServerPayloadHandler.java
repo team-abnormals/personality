@@ -21,12 +21,12 @@ public class ServerPayloadHandler {
 			UUID uuid = player.getUUID();
 			if (!payload.isCrawling() || Personality.SITTING_PLAYERS.contains(uuid) || player.isPassenger()) {
 				player.setForcedPose(null);
-				PacketDistributor.sendToPlayer(player, new SyncCrawlPayload(uuid, false));
+				PacketDistributor.sendToPlayersTrackingEntity(player, new SyncCrawlPayload(uuid, false));
 				return;
 			}
 
 			player.setForcedPose(Pose.SWIMMING);
-			PacketDistributor.sendToPlayer(player, new SyncCrawlPayload(uuid, true));
+			PacketDistributor.sendToPlayersTrackingEntity(player, new SyncCrawlPayload(uuid, true));
 		}
 	}
 
@@ -38,13 +38,13 @@ public class ServerPayloadHandler {
 			if (!payload.isSitting() || !PersonalityEvents.testSit(player)) {
 				players.remove(player.getUUID());
 				player.refreshDimensions();
-				PacketDistributor.sendToPlayer(player, new SyncSitPayload(uuid, false));
+				PacketDistributor.sendToPlayersTrackingEntity(player, new SyncSitPayload(uuid, false));
 				return;
 			}
 
 			players.add(player.getUUID());
 			player.refreshDimensions();
-			PacketDistributor.sendToPlayer(player, new SyncSitPayload(uuid, true));
+			PacketDistributor.sendToPlayersTrackingEntity(player, new SyncSitPayload(uuid, true));
 		}
 	}
 }

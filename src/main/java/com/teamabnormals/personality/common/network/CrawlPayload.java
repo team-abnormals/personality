@@ -5,6 +5,7 @@ import com.teamabnormals.personality.core.Personality;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -17,7 +18,9 @@ public record CrawlPayload(boolean isCrawling) implements CustomPacketPayload {
 	);
 
 	public static void handle(CrawlPayload payload, IPayloadContext context) {
-		context.enqueueWork(() -> ServerPayloadHandler.handleCrawl(payload, context)).exceptionally(e -> null);
+		if (context.connection().getDirection() == PacketFlow.SERVERBOUND) {
+			context.enqueueWork(() -> ServerPayloadHandler.handleCrawl(payload, context)).exceptionally(e -> null);
+		}
 	}
 
 	@Override

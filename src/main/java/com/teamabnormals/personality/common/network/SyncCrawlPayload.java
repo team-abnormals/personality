@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -21,7 +22,9 @@ public record SyncCrawlPayload(UUID uuid, boolean isCrawling) implements CustomP
 	);
 
 	public static void handle(SyncCrawlPayload payload, IPayloadContext context) {
-		context.enqueueWork(() -> ClientPayloadHandler.handleCrawlSync(payload)).exceptionally(e -> null);
+		if (context.connection().getDirection() == PacketFlow.CLIENTBOUND) {
+			context.enqueueWork(() -> ClientPayloadHandler.handleCrawlSync(payload)).exceptionally(e -> null);
+		}
 	}
 
 	@Override
