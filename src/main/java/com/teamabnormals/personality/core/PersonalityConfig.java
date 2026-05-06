@@ -1,5 +1,6 @@
 package com.teamabnormals.personality.core;
 
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
@@ -55,7 +56,7 @@ public class PersonalityConfig {
 			this.villagersCloseEyes = builder.comment("If Villagers should close their eyes when sleeping").define("Villager close eyes", true);
 			builder.pop();
 			builder.push("sheep");
-			this.sheepFurOverlay = builder.comment("If Sheep should show their fur color beneath their coat, like in Bedrock edition").define("Sheep fur overlay", true);
+			this.sheepFurOverlay = builder.comment("If Sheep should show their fur color beneath their coat, like in Bedrock edition").define("Sheep fur overlay", !ModList.get().isLoaded("mixed_litter"));
 			builder.pop();
 			builder.pop();
 		}
